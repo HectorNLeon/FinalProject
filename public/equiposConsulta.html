@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Torneos Borregos - Perfil</title>
+    <title>Torneos Borregos - Equipos</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -18,7 +18,7 @@
 
   </head>
 
-  <body onload="loadProfile()">
+  <body onload="loadAllTeams()">
 
     <div class="d-flex" id="wrapper">
 
@@ -30,8 +30,8 @@
         </div>
         <div class="list-group list-group-flush bg-primary">
           <a href="./home.html" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
-          <a class="list-group-item list-group-item-action bg-dark text-white">Perfil</a>
-          <a href="./equiposConsulta.html" class="list-group-item list-group-item-action bg-primary text-white">Equipos</a>
+          <a href="./perfil.html" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
+          <a class="list-group-item list-group-item-action bg-dark text-white">Equipos</a>
           <a href="#" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
         </div>      
         <a href="#" class="list-group-item list-group-item-action bg-light text-danger" id="logout">Salir</a>
@@ -59,44 +59,61 @@
           </div>
         </nav>
 
-        <div class="container-fluid">
-          <h1 class="mt-4 text-center" id="nameProfile">Name</h1>
-          <div class="text-center mb-4">
-            <img style="max-width:300px; margin: 10px;" src="./img/yo.jpg" class="text-center rounded-circle">
-          </div>
-          <div class="container mt-5">
-            <div class="row mb-4">
-              <div class="col-12">
-                <label for="userProfile">Usuario</label>
-                <p class="h3" id="userProfile">
-                    User
-                </p>
+        <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">Crear equipo</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+              <div class="md-form mb-5">
+                <i class="fas fa-envelope prefix grey-text"></i>
+                <input type="text" id="Form-teamName" class="form-control validate">
+                <label for="Form-teamName">Nombre de tu equipo</label>              
+                <i class="fas fa-lock prefix grey-text"></i>
+                <input type="text" id="Form-desc" class="form-control validate">
+                <label for="Form-desc">Danos una pequeña descripción del equipo</label>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 col-md-4 col-sm-12">
-              <label for="mailProfile">Mail</label>
-               <p class="h3 text-center" id="mailProfile">
-                Mail
-              </p>
+            <div class="modal-footer d-flex justify-content-center">
+              <button class="btn btn-default badge-primary" id="Form-createTeam">Crear</button>
             </div>
-            <div class="col-12 col-md-4 col-sm-12">
-              <label for="ageProfile">Edad</label>
-              <p class="h3 text-center" id="ageProfile">
-                Age
-              </p>
-            </div>
-            <div class="col-12 col-md-4 col-sm-12">
-              <label for="phoneProfile">Teléfono</label>
-              <p class="h3 text-center" id="phoneProfile">
-                Phone
-              </p>
-            </div>
-          </div>          
-        </div>            
-        <p id="bioProfile" class="display-4 text-justify text-center m-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus odit veniam reprehenderit amet consequatur, facilis iusto dolor voluptatum, veritatis repudiandae porro excepturi, quia expedita magnam inventore cumque, sint. Modi delectus perferendis, facere porro totam praesentium sequi consequuntur ullam et.
-        </p>                    
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="" class="btn btn-default btn-rounded m-4 badge-primary" data-toggle="modal" data-target="#modalLoginForm">
+          Crear equipo (+)
+        </a>
+      </div>
+
+      <div class="container-fluid">
+        <h1 class="mt-4 text-center">Equipos registrados en el sistema</h1>
+        <div class="container mt-5">
+          <ul class="list-group" id="allTeams">
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+          </ul>
+        </div>          
       </div>
     </div>
     <!-- /#page-content-wrapper -->

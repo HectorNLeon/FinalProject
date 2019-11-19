@@ -58,7 +58,7 @@ let UserList = {
             });
     },
     postLogin: function(authUser) {               //LOGIN USER
-        return users.findOne({user: authUser.user, password: authUser.pass}, authUser)
+        return users.findOne({user: authUser.user, password: authUser.pass}, {user : 1 , name : 1})
             .then( user => {
                 return user;
             })
