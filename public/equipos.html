@@ -1,0 +1,101 @@
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Torneos Borregos - Equipos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+  </head>
+
+  <body onload="loadTeam()">
+
+    <div class="d-flex" id="wrapper">
+
+      <!-- Sidebar -->
+      <div class="bg-primary border-right" id="sidebar-wrapper">
+        <div class="center">
+          <img style="max-width:100px; margin: 10px;"
+          src="./img/logo.png" class=""> 
+        </div>
+        <div class="list-group list-group-flush bg-primary">
+          <a href="./home.html" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
+          <a href="./perfil.html" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
+          <a href="" class="list-group-item list-group-item-action bg-dark text-white">Equipos</a>
+          <a href="#" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
+        </div>      
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-danger" id="logout">Salir</a>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+          <button class="btn btn-primary " id="menu-toggle">
+            <span class="navbar-toggler-icon" style="background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=ffffff')"></span>          
+          </button>
+
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <p class="h3 text-primary">
+                Torneos Borregos
+              </p>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="container-fluid">
+          <h1 class="mt-4 text-center" id="nameTeam">Team Name</h1>
+          <div class="text-center mb-4">
+            <img style="max-width:300px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+          </div>
+          <p id="descTeam" class="h5 text-justify text-center m-5">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus odit veniam reprehenderit amet consequatur, facilis iusto dolor voluptatum, veritatis repudiandae porro excepturi, quia expedita magnam inventore cumque, sint. Modi delectus perferendis, facere porro totam praesentium sequi consequuntur ullam et.
+          </p>                    
+          <div class="container mt-5">
+            <ul class="list-group" id="membersTeam">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+          </div>          
+        </div>
+      </div>
+      <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Optional JavaScript -->  
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+    <script type="text/javascript" src="./js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+  </body>
+
+  </html>
