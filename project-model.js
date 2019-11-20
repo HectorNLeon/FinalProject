@@ -5,26 +5,50 @@ mongoose.Promise = global.Promise;
 
 
 let userSchema = mongoose.Schema({
+    _id: {type: String},
     name : { type : String },
     bio : { type : String },
     age : { type : Number },
     phone : { type : String },
     mail : { type : String },
     memberSince : { type : Date},
-    user : { type : String },
     password : { type : String }
 });
 
-let teamSchema = mongoose.Schema({	
+let teamSchema = mongoose.Schema({
+    _id:{type: String},
 	teamName : { type : String },
-	creator : { type : userSchema },
+	creator : { type : String },
     creationDate : {type : Date},
 	desc : { type : String },
-	members : [userSchema]
+	members : [String]
 });
+
+let matchSchema = mongoose.Schema({
+    p1: {type: String},
+    p2: {type: String},
+    score: {type: String},
+    winner: {type: String}
+})
+
+let tournamentSchema = mongoose.Schema({
+    name: {type: String},
+    creator: {type: String},
+    date: {type: Date},
+    place: {type: String},
+    game: {type: String},
+    desc: {type: String},
+    participants: [String],
+    matches: [matchSchema],
+    first: {type: String},
+    second: {type: String},
+    third: {type: String}
+});
+
 
 let users = mongoose.model('users', userSchema);
 let teams = mongoose.model('teams', teamSchema );
+let tournaments = mongoose.model('tournaments', tournamentSchema);
 
 
 let UserList = {
@@ -147,7 +171,86 @@ let TeamList = {
     }
 };
 
+let TournamentList = {
+    get: function(){                        //ALL TEAMS
+        return tournaments.find()
+            .then( tournaments => {
+                return tournaments;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+		
+	},
+    getTournament: function(tournamentSearch){                        //GET ONE TEAM
+        return tournaments.findOne({_id: tournamentSearch})
+            .then( tournaments => {
+                return tournaments;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+        
+    },
+    post: function(newTournament) {               //CREATE TEAM, newTeam must have the creator added
+        return tournaments.create(newTournament)
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    update: function(updTournament) {             //UPDATE TEAM
+        return tournament.updateOne({id:updTournament.id}, updTournament)
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    addParticipant: function(updTo) {             //UPDATE TEAM
+        return tournament.updateOne({_id :updTo.id}, {$push: {participants: updTo.part}})
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    addMatch: function(updTo) {             //UPDATE TEAM
+        return tournament.updateOne({id :updTo.id}, {$push: {matches: updTo.match}})
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    updateMatch: function(updTo){
+        return tournament.updateOne({id :updTo.id}, {$set: {"matches.$[element]": updTo.match}},
+                                    {arrayFilters: [ { element: updTo.Index } ], upsert: true })
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    delete: function(tournamentId) {              //DELETE TEAM
+        return tournament.findOneAndRemove({id:tournamentId})
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    }
+};
+
 module.exports = { 
     UserList,
-    TeamList 
+    TeamList,
+    TournamentList
 };

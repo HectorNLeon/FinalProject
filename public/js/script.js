@@ -1,20 +1,21 @@
 
 
-let endpointUser = "/user";
-let endpointLogin = "/users/login";
-let endpointTeam = "/team"
+let endpointUser = "/api/users";
+let endpointLogin = "/api/users/login";
+let endpointTeam = "/api/teams"
+
 
 function checkSession(){
     let userProfile = Cookies.get('userName');
     if(!userProfile){        
-        window.location.href = "index.html";
+        window.location.href = "/";
     }
 }
 
 function checkLogin(){
     let userProfile = Cookies.get('userName');
     if(userProfile){        
-        window.location.href = "home.html";
+        window.location.href = "/home";
     }
 }
 
@@ -98,7 +99,7 @@ $("#btn_login").on("click", function(e){
             }else{
                 alert("Bienvenido");
                 Cookies.set('userName', authUser.user);
-                window.location.href = "home.html";
+                window.location.href = "/home";
             }
         },
         error : function(err){
@@ -110,6 +111,20 @@ $("#btn_login").on("click", function(e){
         }
     });
 });
+
+$('#search').on('click', function(e) {
+    var query = $("#searchString").val();
+    window.location.href = "/search?name="+query;
+});
+$('#searchString').keypress(function (e) {
+    var key = e.which;
+    if(key == 13)  // the enter key code
+     {
+       $("#search").click();
+       return false;  
+     }
+});   
+
 
 $("#logout").on("click", function(e){
     e.preventDefault();

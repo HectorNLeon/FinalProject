@@ -1,0 +1,22 @@
+#carouselExampleIndicators{
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+    height: 300px;
+    overflow: hidden;
+}
+.input-group{
+    margin-left:100px;
+    margin-right:auto;
+    width:50%;
+}
+.d-block{
+    width: 100%;
+    height: 90%;
+}
+#gameTab, #myTabContent{
+    margin-top: 20px;
+    margin-left:auto;
+    margin-right:auto;
+    width: 95%;
+}

@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/35de4e3e97.js" crossorigin="anonymous"></script>
 
   </head>
 
@@ -29,10 +30,10 @@
           src="./img/logo.png" class=""> 
         </div>
         <div class="list-group list-group-flush bg-primary">
-          <a href="./home.html" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
+          <a href="/home" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
           <a href="" class="list-group-item list-group-item-action bg-dark text-white">Perfil</a>
-          <a href="./equipos.html" class="list-group-item list-group-item-action bg-primary text-white">Equipos</a>
-          <a href="#" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
+          <a href="/teams" class="list-group-item list-group-item-action bg-primary text-white">Equipos</a>
+          <a href="/tournaments" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
         </div>      
         <a href="#" class="list-group-item list-group-item-action bg-primary text-danger" id="logout">Salir</a>
       </div>
@@ -50,6 +51,15 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <div class="input-group">
+              <input type="text" class="form-control" id="searchString" placeholder="Busca torneos/usuarios/equipos.." aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
+              </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-circle btn-lg">
+              <i class="fas fa-plus"></i>
+        </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
               <p class="h3 text-primary">

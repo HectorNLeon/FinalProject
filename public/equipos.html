@@ -11,8 +11,8 @@
     <title>Torneos Borregos - Equipos</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/35de4e3e97.js" crossorigin="anonymous"></script>
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
 
@@ -29,10 +29,10 @@
           src="./img/logo.png" class=""> 
         </div>
         <div class="list-group list-group-flush bg-primary">
-          <a href="./home.html" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
-          <a href="./perfil.html" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
+          <a href="/home" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
+          <a href="/profile" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
           <a href="" class="list-group-item list-group-item-action bg-dark text-white">Equipos</a>
-          <a href="#" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
+          <a href="/tournaments" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
         </div>      
         <a href="#" class="list-group-item list-group-item-action bg-primary text-danger" id="logout">Salir</a>
       </div>
@@ -49,6 +49,15 @@
           
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="input-group">
+              <input type="text" class="form-control" id="searchString" placeholder="Busca torneos/usuarios/equipos.." aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
+              </div>
+          </div>
+            <button type="button" class="btn btn-primary btn-circle btn-lg">
+                <i class="fas fa-plus"></i>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -87,7 +96,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
-    <script type="text/javascript" src="./js/script.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
