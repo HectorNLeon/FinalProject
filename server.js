@@ -155,14 +155,17 @@ app.post("/teams", jsonParser, (req, res, next) => {            //CREATE TEAM
 
 app.post("/teamsAdd", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
     let member = {
+        id: "",
         user: "",
         name: ""
     };
+    console.log(req.body.teamName);
     let teamName = req.body.teamName;
-    member.user = req.body.member.user;
-    member.name = req.body.member.name;
+    member.id = req.body.id;
+    member.user = req.body.user;
+    member.name = req.body.name;
 
-    if (!teamName || !member.user || !member.name) {
+    if (!teamName || !member.id || !member.user || !member.name) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
             message: "Missing field in the body",

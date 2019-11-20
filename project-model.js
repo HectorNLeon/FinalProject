@@ -118,7 +118,7 @@ let TeamList = {
             });
     },
     //db.teams.update({"teamName" : "EQUIPO A MODIFICAR"}, {$push: {"members" : "USUARIO A AGREGAR"}})
-    addMember: function(team, member) {             //ADD MEMBER TO TEAM
+    addMember: function(team, member) {             //ADD MEMBER TO TEAM   MEMBER:user and MEMBER:name
         return teams.updateOne({teamName:team}, {$push:{members : member}})
             .then( team => {
                 return team;

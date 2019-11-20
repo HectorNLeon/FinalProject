@@ -2,6 +2,8 @@ let endpointUser = "/user";
 let endpointLogin = "/users/login";
 let endpointTeam = "/team";
 let endpointTeams = "/teams";
+let endpointTeamsAdd = "/teamsAdd";
+
 
 function checkSession(){
     let userProfile = Cookies.get('userName');
@@ -44,7 +46,8 @@ function loadProfile(){
     });
 }
 
-function loadTeam(){
+function loadTeam(){    
+    $("#addMember").hide();
     checkSession();
     let url = new URL(window.location.href);
     let teamPage = url.searchParams.get("team");
@@ -68,6 +71,7 @@ function loadTeam(){
                         ${responseJSON.members[i].name}
                         </li>`);
                 }
+                checkIfCreator();
             }catch(error){
                 let list = $("#resultDiv");
                 list.html("<p class ='display-2 text-center'>No se encontró el equipo</p>");
@@ -76,7 +80,7 @@ function loadTeam(){
         error: function(err){            
                 console.log(err);
                }
-    });
+    });    
 }
 
 function loadAllTeams(){
@@ -104,11 +108,67 @@ function loadAllTeams(){
 
 function checkIfCreator(){
     if(Cookies.get('nameUser') == $("#creatorTeam").text().trim()){
+        $("#addMember").show();
         return true;
     }else{
+        $("#addMember").hide();
         return false;
     }
 }
+
+$("#Form-addMember").on("click", function(e){
+    e.preventDefault();
+    let memberAndTeam = {
+        id: "",
+        user: "",
+        name: "",
+        teamName :""
+    };  
+    memberAndTeam.teamName = $("#nameTeam").text().trim();
+    //GET NEW MEMBER DATA
+    memberAndTeam.user = $("#Form-teamMemberName").val();
+    $.ajax({
+        url: endpointUser+"?user="+memberAndTeam.user,
+        method: "GET",
+        dataType: "json",
+        success: function(responseJSON){
+            try{
+                memberAndTeam.name=responseJSON.name;
+                memberAndTeam.id = responseJSON._id;
+                $.ajax({
+                    url: endpointTeamsAdd,
+                    data : JSON.stringify(memberAndTeam),
+                    method: "POST",
+                    dataType : "JSON",
+                    contentType : "application/json",
+                    success: function(responseJSON){
+                        if(!responseJSON){
+                            alert("Miembro no añadido");
+                        }else{
+                            alert("Miembro añadido");                                            
+                            window.location.href = "equipos.html?team="+memberAndTeam.teamName;
+                        }
+                    },
+                    error : function(err){
+                        if(err.status == 406){
+                            alert("Faltan campos para añadir");
+                        }else{
+                            alert("Error al añadir miembro al equipo");
+                        }            
+                    }
+                });
+            }catch(error){
+                alert("Usuario no encontrado");
+            }
+        },
+        error: function(err){            
+            alert("Error al encontrar usuario");
+            return;
+        }
+    });
+    //ADD NEW MEMBER
+    
+});
 
 $("#Form-createTeam").on("click", function(e){
     e.preventDefault();
