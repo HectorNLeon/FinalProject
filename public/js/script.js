@@ -48,6 +48,7 @@ function loadProfile(){
 
 function loadTeam(){    
     $("#addMember").hide();
+    $("#deleteTeam").hide();
     checkSession();
     let teamPage = window.location.pathname;
     teamPage = teamPage.substring(7);    
@@ -59,8 +60,10 @@ function loadTeam(){
             try{
                 let nameField = $("#nameTeam");
                 let descField = $("#descTeam");
+                let idField = $("#idTeam");
                 nameField.text(responseJSON.teamName);
                 descField.text(responseJSON.desc);
+                idField.text(responseJSON._id);
                 let list = $("#membersTeam");
                 list.html("");
                 list.append(`<li class="list-group-item text-primary" id="creatorTeam">
@@ -101,20 +104,42 @@ function loadAllTeams(){
             }
         },
         error: function(err){
-                console.log(err);
-               }
+            console.log(err);
+        }
     });
 }
 
 function checkIfCreator(){
     if(Cookies.get('userName') == $("#creatorTeam").text().trim()){
         $("#addMember").show();
+        $("#deleteTeam").show();
         return true;
     }else{
         $("#addMember").hide();
+        $("#deleteTeam").hide();
         return false;
     }
 }
+
+$("#Form-deleteTeam").on("click", function(e){
+    e.preventDefault(); 
+    let teamId = $("#idTeam").text().trim();        
+    $.ajax({
+        url: endpointTeams+"/"+teamId,
+        method: "DELETE",
+        dataType: "json",
+        success: function(responseJSON){
+            alert("Equipo borrado");
+            window.location.href = "/teams";
+
+        },
+        error: function(err){            
+            alert("Error al borrar equipo");            
+        }
+    });
+    //ADD NEW MEMBER
+    
+});
 
 $("#Form-addMember").on("click", function(e){
     e.preventDefault();
@@ -138,12 +163,12 @@ $("#Form-addMember").on("click", function(e){
                     method: "POST",
                     dataType : "JSON",
                     contentType : "application/json",
-                    success: function(responseJSON){
-                        if(!responseJSON){
+                    success: function(responseJSON2){
+                        if(!responseJSON2){
                             alert("Miembro no añadido");
                         }else{
-                            alert("Miembro añadido");                                            
-                            window.location.href = "teams/"+memberAndTeam.teamName;
+                            alert("Miembro añadido");                            
+                            window.location.href = "/teams";
                         }
                     },
                     error : function(err){
@@ -192,7 +217,7 @@ $("#Form-createTeam").on("click", function(e){
                 alert("Equipo no creado");
             }else{
                 alert("Equipo creado");                
-                window.location.href = "equiposConsulta.html";
+                window.location.href = "/teams/"+newTeam._id;
             }
         },
         error : function(err){

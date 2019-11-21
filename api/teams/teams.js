@@ -82,4 +82,19 @@ router.post("/Add", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
         });
 });
 
+router.delete("/:Id", jsonParser, (req, res, next) => {
+    let team = req.params.Id;
+    TeamList.delete(team)
+        .then( team => {
+            return res.status( 200 ).json( team );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
 module.exports = router;
