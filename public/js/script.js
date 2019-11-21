@@ -50,6 +50,7 @@ function loadProfile(){
             }catch(error){
                 let nameField = $("#nameProfile");
                 nameField.text("User not found");
+                nameField.attr("class", "display-2 text-center");
                 $("#imgProfile").hide();
                 $("#result").hide();
             }
@@ -95,7 +96,7 @@ function loadTeam(){
                 checkIfCreator();
             }catch(error){
                 let list = $("#resultDiv");
-                list.html("<p class ='display-2 text-center'>No se encontró el equipo</p>");
+                list.html("<p class ='display-2 text-center'>Team not found</p>");
             }
         },
         error: function(err){            
@@ -147,12 +148,12 @@ $("#Form-deleteTeam").on("click", function(e){
         method: "DELETE",
         dataType: "json",
         success: function(responseJSON){
-            alert("Equipo borrado");
+            alert("Team deleted");
             window.location.href = "/teams";
 
         },
         error: function(err){            
-            alert("Error al borrar equipo");            
+            alert("Error deleting team");            
         }
     });
     //ADD NEW MEMBER
@@ -183,26 +184,26 @@ $("#Form-addMember").on("click", function(e){
                     contentType : "application/json",
                     success: function(responseJSON2){
                         if(!responseJSON2){
-                            alert("Miembro no añadido");
+                            alert("Member not added");
                         }else{
-                            alert("Miembro añadido");                            
+                            alert("Member added");                            
                             window.location.href = "/teams";
                         }
                     },
                     error : function(err){
                         if(err.status == 406){
-                            alert("Faltan campos para añadir");
+                            alert("Missing fields");
                         }else{
-                            alert("Error al añadir miembro al equipo");
+                            alert("Error");
                         }            
                     }
                 });
             }catch(error){
-                alert("Usuario no encontrado");
+                alert("User not found");
             }
         },
         error: function(err){            
-            alert("Error al encontrar usuario");
+            alert("Error founding user");
             return;
         }
     });
@@ -232,17 +233,17 @@ $("#Form-createTeam").on("click", function(e){
         contentType : "application/json",
         success: function(responseJSON){
             if(!responseJSON){
-                alert("Equipo no creado");
+                alert("Team not created");
             }else{
-                alert("Equipo creado");                
+                alert("Team created");                
                 window.location.href = "/teams/"+newTeam._id;
             }
         },
         error : function(err){
             if(err.status == 406){
-                alert("Faltan campos para crear");
+                alert("Missing fields to create");
             }else{
-                alert("Error al crear equipo, identificador repetido");
+                alert("Error creating team, repeated id");
             }            
         }
     });
@@ -265,18 +266,18 @@ $("#btn_login").on("click", function(e){
         contentType : "application/json",
         success: function(responseJSON){
             if(!responseJSON){
-                alert("Usuario no registrado");
+                alert("User not registered");
             }else{
-                alert("Bienvenido");
+                alert("Welcome!");
                 Cookies.set('userName', authUser.user);
                 window.location.href = "/home";
             }
         },
         error : function(err){
             if(err.status == 406){
-                alert("Faltan campos para iniciar");
+                alert("Missing fields");
             }else{
-                alert("Error al iniciar sesión");
+                alert("Error logging in");
             }            
         }
     });
