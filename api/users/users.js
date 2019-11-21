@@ -34,9 +34,24 @@ router.get( "/:Id", ( req, res, next ) => {                           //GET ONE 
         });
 });
 
-router.post("/", jsonParser, ( req, res, next ) => { 
+router.post("/", jsonParser, ( req, res, next ) => {
     let user = req.body;
     UserList.post(user)
+        .then( user => {
+            return res.status( 200 ).json( user );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
+router.put("/", jsonParser, ( req, res, next ) => {
+    let user = req.body;
+    UserList.update(user)
         .then( user => {
             return res.status( 200 ).json( user );
         })

@@ -54,6 +54,7 @@ function loadProfile(){
                 $("#imgProfile").hide();
                 $("#result").hide();
             }
+            checkIfMyProf();
         },
         error: function(err){            
                 console.log(err);
@@ -132,13 +133,76 @@ function checkIfCreator(){
     if(Cookies.get('userName') == $("#creatorTeam").text().trim()){
         $("#addMember").show();
         $("#deleteTeam").show();
+        $("#modifyTeam").show();        
         return true;
     }else{
         $("#addMember").hide();
         $("#deleteTeam").hide();
+        $("#modifyTeam").hide(); 
         return false;
     }
 }
+
+function checkIfMyProf(){
+    if(Cookies.get('userName') == $("#userProfile").text().trim()){
+        $("#modifyProfile").show();        
+        return true;
+    }else{
+        $("#modifyProfile").hide();        
+        return false;
+    }
+}
+
+$("#modifyProfile").on("click", function(e){
+    e.preventDefault();
+    $("#Form-newName").val($("#nameProfile").text().trim());
+    $("#Form-newAge").val($("#ageProfile").text().trim());
+    $("#Form-newPhone").val($("#phoneProfile").text().trim());
+    $("#Form-newMail").val($("#mailProfile").text().trim());
+    $("#Form-newBio").val($("#bioProfile").text().trim());
+});
+
+$("#Form-modifyProfile").on("click", function(e){
+    e.preventDefault();
+    let newProf = {
+        user: "",
+        name : "",
+        age : "",
+        phone : "",
+        mail: "",
+        bio :"" 
+    };
+    newProf.name = $("#Form-newName").val();    
+    newProf.age = $("#Form-newAge").val();
+    newProf.phone = $("#Form-newPhone").val();
+    newProf.mail = $("#Form-newMail").val();
+    newProf.bio = $("#Form-newBio").val();
+    newProf.user = $("#userProfile").text().trim();
+    console.log(newProf);
+    $.ajax({
+        url: endpointUser,
+        data : JSON.stringify(newProf),
+        method: "PUT",
+        dataType : "JSON",
+        contentType : "application/json",
+        success: function(responseJSON){
+            console.log(responseJSON);
+            if(responseJSON.nModified==0){
+                alert("User not modified");
+            }else{
+                alert("User modified");
+                window.location.href = "/profile/"+newProf.user;
+            }
+        },
+        error : function(err){
+            if(err.status == 406){
+                alert("Missing fields to modify");
+            }else{
+                alert("Error modifying user");
+            }            
+        }
+    });
+});
 
 $("#Form-deleteTeam").on("click", function(e){
     e.preventDefault(); 
@@ -207,13 +271,12 @@ $("#Form-addMember").on("click", function(e){
             return;
         }
     });
-    //ADD NEW MEMBER
-    
+    //ADD NEW MEMBER    
 });
 
 $("#Form-createTeam").on("click", function(e){
     e.preventDefault();
-    let newTeam = {  
+    let newTeam = {
         _id : "",
         teamName : "",
         creator : "",
@@ -235,7 +298,7 @@ $("#Form-createTeam").on("click", function(e){
             if(!responseJSON){
                 alert("Team not created");
             }else{
-                alert("Team created");                
+                alert("Team created");
                 window.location.href = "/teams/"+newTeam._id;
             }
         },
@@ -244,11 +307,46 @@ $("#Form-createTeam").on("click", function(e){
                 alert("Missing fields to create");
             }else{
                 alert("Error creating team, repeated id");
-            }            
+            }
         }
     });
 });
 
+$("#Form-modifyTeam").on("click", function(e){
+    e.preventDefault();
+    let newTeam = {
+        _id : "",
+        teamName : "",
+        desc : ""
+    };
+    newTeam.teamName = $("#Form-newTeamName").val();
+    newTeam.desc = $("#Form-newDesc").val();
+    newTeam._id = $("#idTeam").text().trim();
+    console.log(newTeam);
+    $.ajax({
+        url: endpointTeams,
+        data : JSON.stringify(newTeam),
+        method: "PUT",
+        dataType : "JSON",
+        contentType : "application/json",
+        success: function(responseJSON){
+            console.log(responseJSON);
+            if(responseJSON.nModified==0){
+                alert("Team not modified");
+            }else{
+                alert("Team modified");
+                window.location.href = "/teams/"+newTeam._id;
+            }
+        },
+        error : function(err){
+            if(err.status == 406){
+                alert("Missing fields to modify");
+            }else{
+                alert("Error modifying team");
+            }            
+        }
+    });
+});
 
 $("#btn_login").on("click", function(e){
     e.preventDefault();

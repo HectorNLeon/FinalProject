@@ -97,4 +97,21 @@ router.delete("/:Id", jsonParser, (req, res, next) => {
         });
 });
 
+router.put("/", jsonParser, (req, res, next) =>{    
+    let updTeam = req.body;
+    console.log(updTeam);
+    TeamList.update(updTeam)
+        .then(team => {
+            console.log(team);
+            return res.status( 200 ).json( team );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
 module.exports = router;

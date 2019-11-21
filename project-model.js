@@ -5,12 +5,12 @@ mongoose.Promise = global.Promise;
 
 
 let userSchema = mongoose.Schema({
-    _id: {type: String},
     name : { type : String },
     bio : { type : String },
     age : { type : Number },
     phone : { type : String },
     mail : { type : String },
+    user : {type : String},
     memberSince : { type : Date},
     password : { type : String }
 });
@@ -152,7 +152,7 @@ let TeamList = {
             });
     },
     update: function(updTeam) {             //UPDATE TEAM
-        return teams.updateOne({_id:updTeam.id}, updTeam)
+        return teams.updateOne({_id:updTeam._id}, {$set : {teamName:updTeam.teamName, desc:updTeam.desc}})
             .then( team => {
                 return team;
             })
