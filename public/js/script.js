@@ -70,7 +70,7 @@ function loadTeam(){
                         ${responseJSON.creator}
                         </li>`);
                 for (let i = 0; i < responseJSON.members.length; i++) {
-                    list.append(`<li class="list-group-item">
+                    list.append(`<li class="list-group-item">                        
                         ${responseJSON.members[i]}
                         </li>`);
                 }
