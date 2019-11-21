@@ -5,6 +5,7 @@ let endpointLogin = "/api/users/login";
 let endpointTeams = "/api/teams";
 let endpointTeamsAdd = "/api/teams/Add";
 
+goMyProf();
 
 function checkSession(){
     let userProfile = Cookies.get('userName');
@@ -12,6 +13,11 @@ function checkSession(){
         window.location.href = "/";
     }
 }
+
+function goMyProf (){
+    let myProfile = "/profile/"+Cookies.get("userName");
+    $("#goProfile").attr("href", myProfile);
+};
 
 function checkLogin(){
     let userProfile = Cookies.get('userName');
@@ -22,25 +28,33 @@ function checkLogin(){
 
 function loadProfile(){
     checkSession();
-    let userProfile = Cookies.get('userName');
+    let userProfile = window.location.pathname;
+    userProfile = userProfile.substring(9);
     $.ajax({url: endpointUser+"/"+userProfile,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
-            let nameField = $("#nameProfile");
-            let userField = $("#userProfile");
-            let ageField = $("#ageProfile");
-            let mailField = $("#mailProfile");
-            let phoneField = $("#phoneProfile");
-            let bioField = $("#bioProfile");
-            nameField.text(responseJSON.name);
-            userField.text(responseJSON.user);
-            ageField.text(responseJSON.age);
-            mailField.text(responseJSON.mail);
-            phoneField.text(responseJSON.phone);
-            bioField.text(responseJSON.bio);
+            try{
+                let nameField = $("#nameProfile");
+                let userField = $("#userProfile");
+                let ageField = $("#ageProfile");
+                let mailField = $("#mailProfile");
+                let phoneField = $("#phoneProfile");
+                let bioField = $("#bioProfile");
+                nameField.text(responseJSON.name);
+                userField.text(responseJSON.user);
+                ageField.text(responseJSON.age);
+                mailField.text(responseJSON.mail);
+                phoneField.text(responseJSON.phone);
+                bioField.text(responseJSON.bio);
+            }catch(error){
+                let nameField = $("#nameProfile");
+                nameField.text("User not found");
+                $("#imgProfile").hide();
+                $("#result").hide();
+            }
         },
-        error: function(err){
+        error: function(err){            
                 console.log(err);
                }
     });
@@ -67,11 +81,15 @@ function loadTeam(){
                 let list = $("#membersTeam");
                 list.html("");
                 list.append(`<li class="list-group-item text-primary" id="creatorTeam">
+                        <a href="/profile/${responseJSON.creator}">
                         ${responseJSON.creator}
+                        </a>
                         </li>`);
                 for (let i = 0; i < responseJSON.members.length; i++) {
-                    list.append(`<li class="list-group-item">                        
+                    list.append(`<li class="list-group-item">   
+                        <a href="/profile/${responseJSON.members[i]}" style="color:black">                     
                         ${responseJSON.members[i]}
+                        </a>
                         </li>`);
                 }
                 checkIfCreator();
