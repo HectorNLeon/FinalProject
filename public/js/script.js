@@ -162,6 +162,12 @@ $("#modifyProfile").on("click", function(e){
     $("#Form-newBio").val($("#bioProfile").text().trim());
 });
 
+$("#modifyTeam").on("click", function(e){
+    e.preventDefault();
+    $("#Form-newTeamName").val($("#nameTeam").text().trim());
+    $("#Form-newDesc").val($("#descTeam").text().trim());
+});
+
 $("#Form-modifyProfile").on("click", function(e){
     e.preventDefault();
     let newProf = {
@@ -219,9 +225,7 @@ $("#Form-deleteTeam").on("click", function(e){
         error: function(err){            
             alert("Error deleting team");            
         }
-    });
-    //ADD NEW MEMBER
-    
+    });    
 });
 
 $("#Form-addMember").on("click", function(e){
