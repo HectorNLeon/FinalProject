@@ -34,25 +34,11 @@ router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
         });
 });
 
-router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM
-    let creator = {
-        user: "",
-        name: ""
-    };
-    let newTeam = {
-        teamName : "",
-        creator : creator,
-        creationDate : "",
-        desc : "",
-        members : []
-    }
-    newTeam.teamName = req.body.teamName;
-    newTeam.desc = req.body.desc;
-    newTeam.creationDate = req.body.creationDate;
-    newTeam.creator.user = req.body.creator.user;
-    newTeam.creator.name = req.body.creator.name;
+router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM    
+    let newTeam = req.body;
 
-    if (!newTeam.teamName || !newTeam.desc || !newTeam.creator.user || !newTeam.creator.name) {
+    console.log(newTeam);
+    if (!newTeam.teamName || !newTeam.desc || !newTeam.creator) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
             message: "Missing field in the body",
@@ -64,24 +50,19 @@ router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM
             return res.status(201).json(newTeam);
         })
         .catch(err => {
-            res.statusMessage = "Something went wrong with the DB";
+            res.statusMessage = err;
             return res.status(500).json({
-                message: "Something went wrong with the DB",
+                message: err,
                 status: 500
             })
         });
 });
 
-router.post("/Add", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
-    let member = {
-        user: "",
-        name: ""
-    };
+router.post("/Add", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM    
     let teamName = req.body.teamName;
-    member.user = req.body.member.user;
-    member.name = req.body.member.name;
+    let member = req.body.user;   
 
-    if (!teamName || !member.user || !member.name) {
+    if (!teamName || !member) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
             message: "Missing field in the body",

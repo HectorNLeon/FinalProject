@@ -2,7 +2,8 @@
 
 let endpointUser = "/api/users";
 let endpointLogin = "/api/users/login";
-let endpointTeam = "/api/teams"
+let endpointTeams = "/api/teams";
+let endpointTeamsAdd = "/api/teams/Add";
 
 
 function checkSession(){
@@ -22,7 +23,7 @@ function checkLogin(){
 function loadProfile(){
     checkSession();
     let userProfile = Cookies.get('userName');
-    $.ajax({url: endpointUser+"?user="+userProfile,
+    $.ajax({url: endpointUser+"/"+userProfile,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
@@ -45,25 +46,57 @@ function loadProfile(){
     });
 }
 
-function loadTeam(){
+function loadTeam(){    
+    $("#addMember").hide();
     checkSession();
-    let teamPage = "gunters";
-    $.ajax({url: endpointTeam+"?team="+teamPage,
+    let teamPage = window.location.pathname;
+    teamPage = teamPage.substring(7);    
+    $.ajax({
+        url: endpointTeams+"/"+teamPage,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
-            let nameField = $("#nameTeam");
-            let descField = $("#descTeam");
-            nameField.text(responseJSON.teamName);
-            descField.text(responseJSON.desc);
-            let list = $("#membersTeam");
-            list.html("");
-            list.append(`<li class="list-group-item text-primary">
-                    ${responseJSON.creator.name}
-                    </li>`);
-            for (let i = 0; i < responseJSON.members.length; i++) {
-                list.append(`<li class="list-group-item">
-                    ${responseJSON.members[i].name}
+            try{
+                let nameField = $("#nameTeam");
+                let descField = $("#descTeam");
+                nameField.text(responseJSON.teamName);
+                descField.text(responseJSON.desc);
+                let list = $("#membersTeam");
+                list.html("");
+                list.append(`<li class="list-group-item text-primary" id="creatorTeam">
+                        ${responseJSON.creator}
+                        </li>`);
+                for (let i = 0; i < responseJSON.members.length; i++) {
+                    list.append(`<li class="list-group-item">
+                        ${responseJSON.members[i]}
+                        </li>`);
+                }
+                checkIfCreator();
+            }catch(error){
+                let list = $("#resultDiv");
+                list.html("<p class ='display-2 text-center'>No se encontró el equipo</p>");
+            }
+        },
+        error: function(err){            
+                console.log(err);
+               }
+    });    
+}
+
+function loadAllTeams(){
+    checkSession();    
+    $.ajax({url: endpointTeams,
+        method: "GET",
+        dataType: "json",
+        success: function(responseJSON){            
+            let list = $("#allTeams");
+            list.html("");            
+            for (let i = 0; i < responseJSON.length; i++) {
+                list.append(`<li class="list-group-item teamItem">
+                    <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+                    <a href="/teams/${responseJSON[i]._id}">
+                    ${responseJSON[i].teamName}
+                    </a>
                     </li>`);
             }
         },
@@ -73,11 +106,105 @@ function loadTeam(){
     });
 }
 
-function getUserURL(){    
-    var user = parent.document.URL.substring(parent.document.URL.indexOf('?')+6, parent.document.URL.length);
-    let userField = $("#userLogged");
-    userField.text(user)
+function checkIfCreator(){
+    if(Cookies.get('userName') == $("#creatorTeam").text().trim()){
+        $("#addMember").show();
+        return true;
+    }else{
+        $("#addMember").hide();
+        return false;
+    }
 }
+
+$("#Form-addMember").on("click", function(e){
+    e.preventDefault();
+    let memberAndTeam = {
+        user: "",
+        teamName :""
+    };  
+    memberAndTeam.teamName = $("#nameTeam").text().trim();
+    //GET NEW MEMBER DATA
+    memberAndTeam.user = $("#Form-teamMemberName").val();
+    $.ajax({
+        url: endpointUser+"/"+memberAndTeam.user,
+        method: "GET",
+        dataType: "json",
+        success: function(responseJSON){
+            try{
+                let a = responseJSON.name;
+                $.ajax({
+                    url: endpointTeamsAdd,
+                    data : JSON.stringify(memberAndTeam),
+                    method: "POST",
+                    dataType : "JSON",
+                    contentType : "application/json",
+                    success: function(responseJSON){
+                        if(!responseJSON){
+                            alert("Miembro no añadido");
+                        }else{
+                            alert("Miembro añadido");                                            
+                            window.location.href = "teams/"+memberAndTeam.teamName;
+                        }
+                    },
+                    error : function(err){
+                        if(err.status == 406){
+                            alert("Faltan campos para añadir");
+                        }else{
+                            alert("Error al añadir miembro al equipo");
+                        }            
+                    }
+                });
+            }catch(error){
+                alert("Usuario no encontrado");
+            }
+        },
+        error: function(err){            
+            alert("Error al encontrar usuario");
+            return;
+        }
+    });
+    //ADD NEW MEMBER
+    
+});
+
+$("#Form-createTeam").on("click", function(e){
+    e.preventDefault();
+    let newTeam = {  
+        _id : "",
+        teamName : "",
+        creator : "",
+        creationDate : "",
+        desc : "",
+        members : []
+    };    
+    newTeam._id = $("#Form-teamId").val();
+    newTeam.teamName = $("#Form-teamName").val();
+    newTeam.desc = $("#Form-desc").val();
+    newTeam.creator= Cookies.get("userName");
+    $.ajax({
+        url: endpointTeams,
+        data : JSON.stringify(newTeam),
+        method: "POST",
+        dataType : "JSON",
+        contentType : "application/json",
+        success: function(responseJSON){
+            if(!responseJSON){
+                alert("Equipo no creado");
+            }else{
+                alert("Equipo creado");                
+                window.location.href = "equiposConsulta.html";
+            }
+        },
+        error : function(err){
+            if(err.status == 406){
+                alert("Faltan campos para crear");
+            }else{
+                alert("Error al crear equipo, identificador repetido");
+            }            
+        }
+    });
+});
+
 
 $("#btn_login").on("click", function(e){
     e.preventDefault();

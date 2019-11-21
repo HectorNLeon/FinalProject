@@ -123,7 +123,7 @@ let TeamList = {
 		
 	},
     getTeam: function(teamSearch){                        //GET ONE TEAM
-        return teams.findOne({teamName: teamSearch})
+        return teams.findOne({_id: teamSearch})
             .then( team => {
                 return team;
             })
@@ -152,7 +152,7 @@ let TeamList = {
             });
     },
     update: function(updTeam) {             //UPDATE TEAM
-        return teams.updateOne({id:updTeam.id}, updTeam)
+        return teams.updateOne({_id:updTeam.id}, updTeam)
             .then( team => {
                 return team;
             })
@@ -161,7 +161,7 @@ let TeamList = {
             });
     },
     delete: function(teamID) {              //DELETE TEAM
-        return teams.findOneAndRemove({id:teamID})
+        return teams.findOneAndRemove({_id:teamID})
             .then( team => {
                 return team;
             })
