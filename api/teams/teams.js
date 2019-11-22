@@ -19,6 +19,7 @@ router.get( "/", ( req, res, next ) => {              //GET ALL TEAMS
         });
 });
 
+
 router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
     let team = req.params.Id;
     TeamList.getTeam(team)
@@ -33,6 +34,7 @@ router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
             })
         });
 });
+
 
 router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM    
     let newTeam = req.body;
@@ -69,6 +71,7 @@ router.post("/Add", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
             status: 406
         });
     }
+
     TeamList.addMember(teamId, member)
         .then(updTeam => {
             return res.status(201).json(updTeam);
@@ -81,6 +84,7 @@ router.post("/Add", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
             })
         });
 });
+
 
 router.put("/Remove", jsonParser, (req, res, next) => {     //REMOVE MEMBER TO TEAM    
     let teamId = req.body.teamId;
@@ -105,6 +109,7 @@ router.put("/Remove", jsonParser, (req, res, next) => {     //REMOVE MEMBER TO T
             })
         });
 });
+
 
 router.delete("/:Id", jsonParser, (req, res, next) => {
     let team = req.params.Id;

@@ -1,5 +1,4 @@
 
-
 let endpointUser = "/api/users";
 let endpointLogin = "/api/users/login";
 let endpointTeams = "/api/teams";
@@ -430,7 +429,6 @@ $("#btn_login").on("click", function(e){
                 alert("Welcome!");
                 Cookies.set('userName', authUser.user);
                 window.location.href = "/home";
-
             }
         },
         error : function(err){
@@ -456,6 +454,12 @@ $('#searchString').keypress(function (e) {
      }
 });   
 
+$('#inputGroupFile01').on('change',function(){
+    //get the file name
+    var fileName = $(this).val();
+    //replace the "Choose a file" label
+    $(this).next('.custom-file-label').html(fileName);
+})
 
 $("#logout").on("click", function(e){
     e.preventDefault();

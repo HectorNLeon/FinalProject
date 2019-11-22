@@ -32,6 +32,7 @@
             src="./img/logo.png" class="align-self-center"> 
           </div>
           <div class="list-group list-group-flush bg-primary">
+
             <a href="" class="list-group-item list-group-item-action bg-dark text-white">Home</a>
             <a href="/profile" class="list-group-item list-group-item-action bg-primary text-white" id="goProfile">Profile</a>
             <a href="/teams" class="list-group-item list-group-item-action bg-primary text-white">Teams</a>
@@ -60,9 +61,11 @@
                   <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary btn-circle btn-lg">
-                <i class="fas fa-plus"></i>
-          </button>
+            <button type="button" onclick="window.location.href = '/create'" class="btn btn-primary btn-md" style="margin-left: 100px;">
+              Create
+              <i class="fas fa-plus"></i>
+            </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">              
               <ul class="navbar-nav ml-auto mt-2 mt-lg-0">                
                 <p class="h3 text-primary">

@@ -11,12 +11,18 @@ const profile = require('./routes/users/users');
 const tournaments = require('./routes/tournaments/tournaments');
 const teams = require('./routes/teams/teams');
 const search = require('./routes/search/search');
+const bodyParser = require('body-parser');
+
 
 
 mongoose.Promise = global.Promise;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
@@ -36,6 +42,13 @@ app.use('/search', search);
 
 app.get('/home', ( req, res, next ) => {             
     res.sendFile(path.join(__dirname+'/public/home.html'));
+});
+
+app.get('/create', ( req, res, next ) => {             
+    res.sendFile(path.join(__dirname+'/public/create.html'));
+});
+app.get('/edit/:id', ( req, res, next ) => {             
+    res.sendFile(path.join(__dirname+'/public/create.html'));
 
 });
 
