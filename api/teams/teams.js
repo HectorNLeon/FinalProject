@@ -59,17 +59,41 @@ router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM
 });
 
 router.post("/Add", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM    
-    let teamName = req.body.teamName;
+    let teamId = req.body.teamId;
     let member = req.body.user;   
 
-    if (!teamName || !member) {
+    if (!teamId || !member) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
             message: "Missing field in the body",
             status: 406
         });
     }
-    TeamList.addMember(teamName, member)
+    TeamList.addMember(teamId, member)
+        .then(updTeam => {
+            return res.status(201).json(updTeam);
+        })
+        .catch(err => {
+            res.statusMessage = "Something went wrong with the DB";
+            return res.status(500).json({
+                message: "Something went wrong with the DB",
+                status: 500
+            })
+        });
+});
+
+router.put("/Remove", jsonParser, (req, res, next) => {     //REMOVE MEMBER TO TEAM    
+    let teamId = req.body.teamId;
+    let member = req.body.user;   
+
+    if (!teamId || !member) {
+        res.statusMessage = "Missing field in the body";
+        return res.status(406).json( {
+            message: "Missing field in the body",
+            status: 406
+        });
+    }
+    TeamList.removeMember(teamId, member)
         .then(updTeam => {
             return res.status(201).json(updTeam);
         })

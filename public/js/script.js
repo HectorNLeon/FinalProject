@@ -4,6 +4,7 @@ let endpointUser = "/api/users";
 let endpointLogin = "/api/users/login";
 let endpointTeams = "/api/teams";
 let endpointTeamsAdd = "/api/teams/Add";
+let endpointTeamsRemove = "/api/teams/Remove";
 
 goMyProf();
 
@@ -82,16 +83,26 @@ function loadTeam(){
                 idField.text(responseJSON._id);
                 let list = $("#membersTeam");
                 list.html("");
-                list.append(`<li class="list-group-item text-primary" id="creatorTeam">
-                        <a href="/profile/${responseJSON.creator}">
-                        ${responseJSON.creator}
-                        </a>
+                list.append(`<li class="list-group-item text-primary flex-row" id="creatorTeam">
+                        <div class="d-flex flex-row">
+                            <div class="p-0">
+                                <a href="/profile/${responseJSON.creator}">
+                                ${responseJSON.creator}
+                            </a>
+                            </div>                            
+                        </div>
                         </li>`);
                 for (let i = 0; i < responseJSON.members.length; i++) {
-                    list.append(`<li class="list-group-item">   
-                        <a href="/profile/${responseJSON.members[i]}" style="color:black">                     
-                        ${responseJSON.members[i]}
-                        </a>
+                    list.append(`<li class="list-group-item">
+                        <div class="d-flex flex-row">
+                            <div class="p-0">
+                                <a href="/profile/${responseJSON.members[i]}" style="color:black">
+                                ${responseJSON.members[i]}
+                                </a>
+                            </div>
+                            <div class="ml-auto p-0 deleteMembers">
+                                <button class="btn btn-danger button_delMember align-self-end"> Remove</button>
+                            </div>                        
                         </li>`);
                 }
                 checkIfCreator();
@@ -133,12 +144,18 @@ function checkIfCreator(){
     if(Cookies.get('userName') == $("#creatorTeam").text().trim()){
         $("#addMember").show();
         $("#deleteTeam").show();
-        $("#modifyTeam").show();        
+        $("#modifyTeam").show();
+        $(".deleteMembers").each(function(index, element) {
+            $(element).show();
+        });
         return true;
     }else{
         $("#addMember").hide();
         $("#deleteTeam").hide();
-        $("#modifyTeam").hide(); 
+        $("#modifyTeam").hide();
+        $(".deleteMembers").each(function(index, element) {
+            $(element).hide();
+        });
         return false;
     }
 }
@@ -228,13 +245,47 @@ $("#Form-deleteTeam").on("click", function(e){
     });    
 });
 
+$("#membersTeam").on("click", ".button_delMember", function(e){
+    e.preventDefault();
+    let memberAndTeam = {
+        user: "",
+        teamId :""
+    };
+    memberAndTeam.user = e.target.parentNode.parentNode.querySelector("a").innerText;
+    memberAndTeam.teamId = $("#idTeam").text().trim();
+    console.log(memberAndTeam.user);
+    console.log(memberAndTeam.teamId);
+    $.ajax({
+        url: endpointTeamsRemove,
+        data : JSON.stringify(memberAndTeam),
+        method: "PUT",
+        dataType : "JSON",
+        contentType : "application/json",
+        success: function(responseJSON2){
+            if(!responseJSON2){
+                alert("Member not removed");
+            }else{
+                alert("Member removed");
+                window.location.href = "/teams/"+memberAndTeam.teamId;
+            }
+        },
+        error : function(err){
+            if(err.status == 406){
+                alert("Missing fields");
+            }else{
+                alert("Error");
+            }
+        }
+    });
+});
+
 $("#Form-addMember").on("click", function(e){
     e.preventDefault();
     let memberAndTeam = {
         user: "",
-        teamName :""
+        teamId :""
     };  
-    memberAndTeam.teamName = $("#nameTeam").text().trim();
+    memberAndTeam.teamId = $("#idTeam").text().trim();
     //GET NEW MEMBER DATA
     memberAndTeam.user = $("#Form-teamMemberName").val();
     $.ajax({
@@ -255,7 +306,7 @@ $("#Form-addMember").on("click", function(e){
                             alert("Member not added");
                         }else{
                             alert("Member added");                            
-                            window.location.href = "/teams";
+                            window.location.href = "/teams/"+memberAndTeam.teamId;
                         }
                     },
                     error : function(err){
@@ -275,7 +326,6 @@ $("#Form-addMember").on("click", function(e){
             return;
         }
     });
-    //ADD NEW MEMBER    
 });
 
 $("#Form-createTeam").on("click", function(e){

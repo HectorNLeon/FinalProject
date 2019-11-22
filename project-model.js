@@ -143,7 +143,16 @@ let TeamList = {
     },
     //db.teams.update({"teamName" : "EQUIPO A MODIFICAR"}, {$push: {"members" : "USUARIO A AGREGAR"}})
     addMember: function(team, member) {             //ADD MEMBER TO TEAM
-        return teams.updateOne({teamName:team}, {$push:{members : member}})
+        return teams.updateOne({_id:team}, {$push:{members : member}})
+            .then( team => {
+                return team;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    removeMember: function(team, member) {             //REMOVE MEMBER TO TEAM
+        return teams.updateOne({_id:team}, {$pull:{members : member}})
             .then( team => {
                 return team;
             })
