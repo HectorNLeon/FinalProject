@@ -19,9 +19,28 @@ router.get( "/", ( req, res, next ) => {                          //GET ALL USER
         });
 });
 
-router.get( "/:Id", ( req, res, next ) => {                           //GET ONE USER
+router.get( "/id/:Id", ( req, res, next ) => {                           //GET ONE USER
     let user = req.params.Id;
     UserList.getUser(user)
+        .then( user => {
+            return res.status( 200 ).json( user );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
+router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM
+    let user = req.query;
+    for(var key in user){
+        let temp = user[key];
+        user[key] = new RegExp(".*" + temp + ".*")
+    }
+    UserList.getUsers(user)
         .then( user => {
             return res.status( 200 ).json( user );
         })

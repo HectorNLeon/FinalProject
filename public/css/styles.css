@@ -8,6 +8,20 @@
   min-height: 100vh;
 }
 
+.card-img{
+  position: absolute; 
+  top: -9999px; 
+  bottom: -9999px; 
+  left: -9999px; 
+  right: -9999px; 
+  margin: auto;
+}
+
+body{
+  height: 100%;
+  width: 100%;
+}
+
 .bg-image {
   background-image: url('https://tec.mx/sites/default/files/2019-09/bv-03c-1920x1080-compressed.jpg');
   background-size: cover;

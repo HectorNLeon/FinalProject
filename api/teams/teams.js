@@ -19,9 +19,28 @@ router.get( "/", ( req, res, next ) => {              //GET ALL TEAMS
         });
 });
 
-router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
+router.get( "/id/:Id", ( req, res, next ) => {                   //GET ONE TEAM
     let team = req.params.Id;
-    TeamList.getTeam(team)
+    TeamList.getTeamById(team)
+        .then( team => {
+            return res.status( 200 ).json( team );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
+router.get( "/search/", ( req, res, next ) => {                   //GET ONE TEAM
+    let team = req.query;
+    for(var key in team){
+        let temp = team[key];
+        team[key] = new RegExp(".*" + temp + ".*")
+    }
+    TeamList.getTeams(team)
         .then( team => {
             return res.status( 200 ).json( team );
         })
@@ -46,13 +65,13 @@ router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM
         desc : "",
         members : []
     }
+    newTeam._id = req.body._id;
     newTeam.teamName = req.body.teamName;
     newTeam.desc = req.body.desc;
     newTeam.creationDate = req.body.creationDate;
-    newTeam.creator.user = req.body.creator.user;
-    newTeam.creator.name = req.body.creator.name;
+    newTeam.creator = req.body.creator;
 
-    if (!newTeam.teamName || !newTeam.desc || !newTeam.creator.user || !newTeam.creator.name) {
+    if (!newTeam.teamName || !newTeam.desc || !newTeam.creator) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
             message: "Missing field in the body",
