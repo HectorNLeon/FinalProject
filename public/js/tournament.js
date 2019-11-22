@@ -11,6 +11,7 @@ let tournaments;
 let currentD;
 let currentE;
 
+
 function load(){
     let user = Cookies.get('userName');
     let teams = 

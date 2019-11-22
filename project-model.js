@@ -11,6 +11,7 @@ let userSchema = mongoose.Schema({
     age : { type : Number },
     phone : { type : String },
     mail : { type : String },
+    user : {type : String},
     memberSince : { type : Date},
     password : { type : String }
 });
@@ -45,6 +46,7 @@ let tournamentSchema = mongoose.Schema({
     started: {type: Boolean},
     matches: [matchSchema],
     img: { type: String}
+
 });
 
 
@@ -94,7 +96,7 @@ let UserList = {
             });
     },
     postLogin: function(authUser) {               //LOGIN USER
-        return users.findOne({user: authUser.user, password: authUser.pass}, {user : 1 , name : 1})
+        return users.findOne({user: authUser.user})
             .then( user => {
                 return user;
             })
@@ -134,8 +136,9 @@ let TeamList = {
             });
 		
 	},
-    getTeamById: function(teamSearch){                        //GET ONE TEAM
-        return teams.findOne({teamName: teamSearch})
+
+    getTeam: function(teamSearch){                        //GET ONE TEAM
+        return teams.findOne({_id: teamSearch})
             .then( team => {
                 return team;
             })
@@ -166,8 +169,17 @@ let TeamList = {
             });
     },
     //db.teams.update({"teamName" : "EQUIPO A MODIFICAR"}, {$push: {"members" : "USUARIO A AGREGAR"}})
-    addMember: function(team, member) {             //ADD MEMBER TO TEAM   MEMBER:user and MEMBER:name
-        return teams.updateOne({teamName:team}, {$push:{members : member}})
+    addMember: function(team, member) {             //ADD MEMBER TO TEAM
+        return teams.updateOne({_id:team}, {$push:{members : member}})
+            .then( team => {
+                return team;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    removeMember: function(team, member) {             //REMOVE MEMBER TO TEAM
+        return teams.updateOne({_id:team}, {$pull:{members : member}})
             .then( team => {
                 return team;
             })
@@ -176,7 +188,7 @@ let TeamList = {
             });
     },
     update: function(updTeam) {             //UPDATE TEAM
-        return teams.updateOne({id:updTeam.id}, updTeam)
+        return teams.updateOne({_id:updTeam._id}, {$set : {teamName:updTeam.teamName, desc:updTeam.desc}})
             .then( team => {
                 return team;
             })
@@ -185,7 +197,7 @@ let TeamList = {
             });
     },
     delete: function(teamID) {              //DELETE TEAM
-        return teams.findOneAndRemove({id:teamID})
+        return teams.findOneAndRemove({_id:teamID})
             .then( team => {
                 return team;
             })
@@ -249,6 +261,7 @@ let TournamentList = {
     },
     addParticipant: function(updTo) {             //UPDATE TEAM
         return tournaments.updateOne({_id :updTo.id}, {$push: {participants: updTo.part}})
+
             .then( tournament => {
                 return tournament;
             })
@@ -258,6 +271,7 @@ let TournamentList = {
     },
     addMatch: function(updTo) {             //UPDATE TEAM
         return tournaments.updateOne({_id :updTo._id}, {$push: {matches: updTo.matches}})
+
             .then( tournament => {
                 return tournament;
             })
@@ -267,16 +281,19 @@ let TournamentList = {
     },
     updateMatch: function(id, matchId, match){
         return tournaments.updateOne({_id : id, "matches._id": matchId}, {$set: {"matches.$": match}})
+
             .then( tournament => {
                 return tournament;
             })
             .catch( error => {
                 console.log(error);
+
                 throw Error( error );
             });
     },
     delete: function(tournamentId) {              //DELETE TEAM
         return tournaments.findOneAndRemove({_id:tournamentId})
+
             .then( tournament => {
                 return tournament;
             })

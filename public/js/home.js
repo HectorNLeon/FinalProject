@@ -22,6 +22,7 @@ function init(){
                 '<h5 class="card-title">'+element.name+'</h5>'+
                 '<div class="cardp"> <p class="card-text">'+element.place+'</p> </div>'+
                 '<div class="cardp"> <p class="card-text">'+formatDate(new Date(element.date))+'</p> </div>'+
+
                 '</div>'+
             '</div>'+
                 '</a>');
@@ -34,6 +35,7 @@ function init(){
                     '<h5 class="card-title">'+element.name+'</h5>'+
                     '<div class="cardp"> <p class="card-text">'+element.place+'</p> </div>'+
                     '<div class="cardp"> <p class="card-text">'+formatDate(new Date(element.date))+'</p> </div>'+
+
                     '</div>'+
                 '</div>'+
                     '</a>');
@@ -47,6 +49,7 @@ function init(){
                     '<h5 class="card-title">'+element.name+'</h5>'+
                     '<div class="cardp"> <p class="card-text">'+element.place+'</p> </div>'+
                     '<div class="cardp"> <p class="card-text">'+formatDate(new Date(element.date))+'</p> </div>'+
+
                     '</div>'+
                 '</div>'+
                     '</a>');
@@ -61,6 +64,7 @@ function init(){
                     '<div class="cardp"> <p class="card-text">'+element.place+'</p> </div>'+
                     '<div class="cardp"> <p class="card-text">'+formatDate(new Date(element.date))+'</p> </div>'+
                      '</div>'+
+
                 '</div>'+
                     '</a>');
             }

@@ -10,6 +10,7 @@ const fs = require('fs')
 
 
 
+
 router.get( "/", ( req, res, next ) => {              //GET ALL TEAMS
     TournamentList.get()
         .then( tournaments => {
@@ -27,6 +28,7 @@ router.get( "/", ( req, res, next ) => {              //GET ALL TEAMS
 router.get( "/id/:tournament", ( req, res, next ) => {                   //GET ONE TEAM
     let tournament = req.params.tournament;
     TournamentList.getTournamentByID(tournament)
+
         .then( tournament => {
             return res.status( 200 ).json( tournament );
         })
@@ -176,6 +178,7 @@ router.put("/update/:id", (req, res, next) => {     //ADD MEMBER TO TEAM
     TournamentList.update(id, info)
         .then(updPart => {
             return res.status(201).json(updPart);
+
         })
         .catch(err => {
             res.statusMessage = "Something went wrong with the DB";
@@ -235,7 +238,6 @@ router.post("/addM", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
 router.put("/match", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
     let info = req.body;
     const matchID = info.match._id;
-
     if (!info.id) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
@@ -285,7 +287,6 @@ router.delete("/:id", (req, res, next) => {     //ADD MEMBER TO TEAM
             })
         });
 });
-
 
 
 module.exports = router;
