@@ -112,12 +112,6 @@ router.post("/login", jsonParser, (req, res, next) => {          //USER LOGIN
     UserList.postLogin(authUser)
         .then(user => {
             console.log(user);
-            if(!user){
-                return res.status(400).json({
-                    message: "Username does not exist",
-                    status: 400
-                });
-            }
             if(!Bcrypt.compareSync(authUser.pass, user.password)) {
                 return res.status(400).json({
                     message: "Password incorrect",
