@@ -40,15 +40,20 @@ app.use('/profile', profile);
 app.use('/teams', teams);
 app.use('/search', search);
 
+
+app.get('/', ( req, res, next ) => {             
+    res.sendFile(path.join(__dirname+'./public/index.html'));
+});
+
 app.get('/home', ( req, res, next ) => {             
-    res.sendFile(path.join(__dirname+'/public/home.html'));
+    res.sendFile(path.join(__dirname+'./public/home.html'));
 });
 
 app.get('/create', ( req, res, next ) => {             
-    res.sendFile(path.join(__dirname+'/public/create.html'));
+    res.sendFile(path.join(__dirname+'./public/create.html'));
 });
 app.get('/edit/:id', ( req, res, next ) => {             
-    res.sendFile(path.join(__dirname+'/public/create.html'));
+    res.sendFile(path.join(__dirname+'./public/create.html'));
 
 });
 
