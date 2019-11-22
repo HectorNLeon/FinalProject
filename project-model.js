@@ -10,21 +10,45 @@ let userSchema = mongoose.Schema({
     age : { type : Number },
     phone : { type : String },
     mail : { type : String },
+    user : {type : String},
     memberSince : { type : Date},
-    user : { type : String },
     password : { type : String }
 });
 
-let teamSchema = mongoose.Schema({	
+let teamSchema = mongoose.Schema({
+    _id:{type: String},
 	teamName : { type : String },
-	creator : { type : userSchema },
+	creator : { type : String },
     creationDate : {type : Date},
 	desc : { type : String },
-	members : [userSchema]
+	members : [String]
 });
+
+let matchSchema = mongoose.Schema({
+    p1: {type: String},
+    p2: {type: String},
+    score: {type: String},
+    winner: {type: String}
+})
+
+let tournamentSchema = mongoose.Schema({
+    name: {type: String},
+    creator: {type: String},
+    date: {type: Date},
+    place: {type: String},
+    game: {type: String},
+    desc: {type: String},
+    participants: [String],
+    matches: [matchSchema],
+    first: {type: String},
+    second: {type: String},
+    third: {type: String}
+});
+
 
 let users = mongoose.model('users', userSchema);
 let teams = mongoose.model('teams', teamSchema );
+let tournaments = mongoose.model('tournaments', tournamentSchema);
 
 
 let UserList = {
@@ -58,7 +82,7 @@ let UserList = {
             });
     },
     postLogin: function(authUser) {               //LOGIN USER
-        return users.findOne({user: authUser.user, password: authUser.pass}, {user : 1 , name : 1})
+        return users.findOne({user: authUser.user})
             .then( user => {
                 return user;
             })
@@ -99,7 +123,7 @@ let TeamList = {
 		
 	},
     getTeam: function(teamSearch){                        //GET ONE TEAM
-        return teams.findOne({teamName: teamSearch})
+        return teams.findOne({_id: teamSearch})
             .then( team => {
                 return team;
             })
@@ -118,8 +142,17 @@ let TeamList = {
             });
     },
     //db.teams.update({"teamName" : "EQUIPO A MODIFICAR"}, {$push: {"members" : "USUARIO A AGREGAR"}})
-    addMember: function(team, member) {             //ADD MEMBER TO TEAM   MEMBER:user and MEMBER:name
-        return teams.updateOne({teamName:team}, {$push:{members : member}})
+    addMember: function(team, member) {             //ADD MEMBER TO TEAM
+        return teams.updateOne({_id:team}, {$push:{members : member}})
+            .then( team => {
+                return team;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    removeMember: function(team, member) {             //REMOVE MEMBER TO TEAM
+        return teams.updateOne({_id:team}, {$pull:{members : member}})
             .then( team => {
                 return team;
             })
@@ -128,7 +161,7 @@ let TeamList = {
             });
     },
     update: function(updTeam) {             //UPDATE TEAM
-        return teams.updateOne({id:updTeam.id}, updTeam)
+        return teams.updateOne({_id:updTeam._id}, {$set : {teamName:updTeam.teamName, desc:updTeam.desc}})
             .then( team => {
                 return team;
             })
@@ -137,7 +170,7 @@ let TeamList = {
             });
     },
     delete: function(teamID) {              //DELETE TEAM
-        return teams.findOneAndRemove({id:teamID})
+        return teams.findOneAndRemove({_id:teamID})
             .then( team => {
                 return team;
             })
@@ -147,7 +180,86 @@ let TeamList = {
     }
 };
 
+let TournamentList = {
+    get: function(){                        //ALL TEAMS
+        return tournaments.find()
+            .then( tournaments => {
+                return tournaments;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+		
+	},
+    getTournament: function(tournamentSearch){                        //GET ONE TEAM
+        return tournaments.findOne({_id: tournamentSearch})
+            .then( tournaments => {
+                return tournaments;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+        
+    },
+    post: function(newTournament) {               //CREATE TEAM, newTeam must have the creator added
+        return tournaments.create(newTournament)
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    update: function(updTournament) {             //UPDATE TEAM
+        return tournament.updateOne({id:updTournament.id}, updTournament)
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    addParticipant: function(updTo) {             //UPDATE TEAM
+        return tournament.updateOne({_id :updTo.id}, {$push: {participants: updTo.part}})
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    addMatch: function(updTo) {             //UPDATE TEAM
+        return tournament.updateOne({id :updTo.id}, {$push: {matches: updTo.match}})
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    updateMatch: function(updTo){
+        return tournament.updateOne({id :updTo.id}, {$set: {"matches.$[element]": updTo.match}},
+                                    {arrayFilters: [ { element: updTo.Index } ], upsert: true })
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    },
+    delete: function(tournamentId) {              //DELETE TEAM
+        return tournament.findOneAndRemove({id:tournamentId})
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+    }
+};
+
 module.exports = { 
     UserList,
-    TeamList 
+    TeamList,
+    TournamentList
 };

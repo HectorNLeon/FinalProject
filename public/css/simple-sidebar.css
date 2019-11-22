@@ -24,6 +24,23 @@ body {
   min-width: 100vw;
 }
 
+.input-group{
+  margin-left:100px;
+  margin-right:auto;
+  width:50%;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+  margin-left: 150px;
+}
+
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
 }

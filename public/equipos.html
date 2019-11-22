@@ -8,17 +8,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Torneos Borregos - Equipos</title>
+    <title>Borregos Tournaments - Teams</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/35de4e3e97.js" crossorigin="anonymous"></script>
 
   </head>
 
-  <body onload="loadTeam();">
+  <body onload="loadAllTeams()">
+
 
     <div class="d-flex" id="wrapper">
 
@@ -29,12 +31,13 @@
           src="./img/logo.png" class=""> 
         </div>
         <div class="list-group list-group-flush bg-primary">
-          <a href="./home.html" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
-          <a href="./perfil.html" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
-          <a href="./equiposConsulta.html" class="list-group-item list-group-item-action bg-dark text-white">Equipos</a>
-          <a href="#" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
+          <a href="/home" class="list-group-item list-group-item-action bg-primary text-white">Home</a>
+          <a href="/profile" class="list-group-item list-group-item-action bg-primary text-white" id="goProfile">Profile</a>
+          <a class="list-group-item list-group-item-action bg-dark text-white">Teams</a>
+          <a href="/tournaments" class="list-group-item list-group-item-action bg-primary text-white">Tournaments</a>        
         </div>      
-        <a href="#" class="list-group-item list-group-item-action bg-light text-danger" id="logout">Salir</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light text-danger" id="logout">Log out</a>
+
       </div>
       <!-- /#sidebar-wrapper -->
 
@@ -50,10 +53,19 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <div class="input-group">
+              <input type="text" class="form-control" id="searchString" placeholder="Busca torneos/usuarios/equipos.." aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
+              </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-circle btn-lg">
+              <i class="fas fa-plus"></i>
+        </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
               <p class="h3 text-primary">
-                Torneos Borregos
+                Borregos Tournaments
               </p>
             </ul>
           </div>
@@ -64,68 +76,61 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold">Añadir miembro</h4>
+              <h4 class="modal-title w-100 font-weight-bold">Create new team</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
-                <i class="fas fa-envelope prefix grey-text"></i>
-                <input type="text" id="Form-teamMemberName" class="form-control validate">
-                <label for="Form-teamMemberName">Usuario de nuevo miembro</label>              
+                <input type="text" id="Form-teamId" class="form-control validate">
+                <label for="Form-teamId">Team ID</label>
+                <input type="text" id="Form-teamName" class="form-control validate">
+                <label for="Form-teamName">Team name</label>              
+                <input type="text" id="Form-desc" class="form-control validate">
+                <label for="Form-desc">Give us a little description of your team</label>
               </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-              <button class="btn btn-default badge-primary" id="Form-addMember">Añadir</button>
+              <button class="btn btn-default badge-primary" id="Form-createTeam">Create</button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="text-center" id="addMember">
+      <div class="text-center">
         <a href="" class="btn btn-default btn-rounded m-4 badge-primary" data-toggle="modal" data-target="#modalLoginForm">
-          Añadir miembro a equipo (+)
+          Create team (+)
         </a>
       </div>
 
-        <div class="container-fluid" id="resultDiv">
-          <h1 class="mt-4 text-center" id="nameTeam">Team Name</h1>
-          <div class="text-center mb-4">
-            <img style="max-width:300px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
-          </div>
-          <p id="descTeam" class="h5 text-justify text-center m-5">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus natus odit veniam reprehenderit amet consequatur, facilis iusto dolor voluptatum, veritatis repudiandae porro excepturi, quia expedita magnam inventore cumque, sint. Modi delectus perferendis, facere porro totam praesentium sequi consequuntur ullam et.
-          </p>                    
-          <div class="container mt-5">
-            <ul class="list-group" id="membersTeam">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-          </div>          
-        </div>
+      <div class="container-fluid">
+        <h1 class="mt-4 text-center">Teams in system:</h1>
+        <div class="container mt-5">
+          <ul class="list-group" id="allTeams">
+            
+          </ul>
+        </div>          
       </div>
-      <!-- /#page-content-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
+    <!-- /#page-content-wrapper -->
 
-    <!-- Optional JavaScript -->  
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
-    <script type="text/javascript" src="./js/script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script>
-      $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-      });
-    </script>
-  </body>
+  </div>
+  <!-- /#wrapper -->
 
-  </html>
+  <!-- Optional JavaScript -->  
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+  <script type="text/javascript" src="/js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+</body>
+
+</html>
