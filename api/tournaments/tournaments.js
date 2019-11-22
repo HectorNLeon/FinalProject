@@ -211,8 +211,8 @@ router.put("/addP", (req, res, next) => {     //ADD MEMBER TO TEAM
 
 router.post("/addM", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
     let info = req.body;
-
-    if (!info.p1 || !info.p2) {
+    console.log(info);
+    if (!info._id) {
         res.statusMessage = "Missing field in the body";
         return res.status(406).json( {
             message: "Missing field in the body",
@@ -234,6 +234,7 @@ router.post("/addM", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
 
 router.put("/match", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
     let info = req.body;
+    const matchID = info.match._id;
 
     if (!info.id) {
         res.statusMessage = "Missing field in the body";
@@ -242,7 +243,7 @@ router.put("/match", jsonParser, (req, res, next) => {     //ADD MEMBER TO TEAM
             status: 406
         });
     }
-    TournamentList.addMatch(info)
+    TournamentList.updateMatch(info.id, matchID, info.match)
         .then(updMatch => {
             return res.status(201).json(updMatch);
         })

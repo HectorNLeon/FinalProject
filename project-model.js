@@ -25,6 +25,7 @@ let teamSchema = mongoose.Schema({
 });
 
 let matchSchema = mongoose.Schema({
+    _id: {type: Number},
     p1: {type: String},
     p2: {type: String},
     score: {type: String},
@@ -39,12 +40,10 @@ let tournamentSchema = mongoose.Schema({
     game: {type: String},
     desc: {type: String},
     participants: [String],
+    ptype: {type: String},
     numberOfParticipants: {type: Number},
     started: {type: Boolean},
     matches: [matchSchema],
-    first: {type: String},
-    second: {type: String},
-    third: {type: String},
     img: { type: String}
 });
 
@@ -258,7 +257,7 @@ let TournamentList = {
             });
     },
     addMatch: function(updTo) {             //UPDATE TEAM
-        return tournaments.updateOne({id :updTo.id}, {$push: {matches: updTo.match}})
+        return tournaments.updateOne({_id :updTo._id}, {$push: {matches: updTo.matches}})
             .then( tournament => {
                 return tournament;
             })
@@ -266,13 +265,13 @@ let TournamentList = {
                 throw Error( error );
             });
     },
-    updateMatch: function(updTo){
-        return tournaments.updateOne({id :updTo.id}, {$set: {"matches.$[element]": updTo.match}},
-                                    {arrayFilters: [ { element: updTo.Index } ], upsert: true })
+    updateMatch: function(id, matchId, match){
+        return tournaments.updateOne({_id : id, "matches._id": matchId}, {$set: {"matches.$": match}})
             .then( tournament => {
                 return tournament;
             })
             .catch( error => {
+                console.log(error);
                 throw Error( error );
             });
     },

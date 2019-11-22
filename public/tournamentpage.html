@@ -79,23 +79,20 @@
                     <button class="btn btn-danger " style="display: none;" id="unregister" >Unregister</button>
                 </div>
                 <div style="margin: 120px 0 0 85%; position: absolute;">
-                    <button class="btn btn-warning " style="display: none;" id="start" >Start tournament</button>
+                    <button class="btn btn-warning" style="display: none;" id="start" >Start tournament</button>
                 </div>
               </div>
           </div>
           <div class="col2" style="width: 100%">
                 <ul class="nav nav-tabs" id="gameTab" role="tablist" style="width: 99%; margin: auto;">
                     <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#informacion" role="tab" aria-controls="home" aria-selected="true">Informacion</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#informacion" role="tab" aria-controls="home" aria-selected="true">Information</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#inscritos" role="tab" aria-controls="profile" aria-selected="false">Inscritos</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#inscritos" role="tab" aria-controls="profile" aria-selected="false">Participants</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#bracket" role="tab" aria-controls="profile" aria-selected="false">Bracket</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#resultados" role="tab" aria-controls="profile" aria-selected="false">Resultados</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent" style="width: 99%; margin: auto;">
@@ -106,10 +103,13 @@
                           </div>
                     </div>
                     <div class="tab-pane fade" id="bracket" role="tabpanel" aria-labelledby="home-tab">
+                          <div id="overlay">
+                              <div id="overlaytext">Tournament hasn't started yet</div>
+                          </div>
                         <main id="tournament">
                           <div style="margin-left: 65%; margin-top: 10px; display: true; position: absolute;">
-                              <button class="btn btn-secondary" style=" margin-top: 10px;">Shuffle bracket</button>
-                              <button class="btn btn-danger" style=" margin-top: 20px; ">Lock bracket</button>
+                              <button class="btn btn-secondary" id="shuffle" style=" margin-top: 10px; display: none;">Shuffle bracket</button>
+                              <button class="btn btn-danger" id="lock" style=" margin-top: 10px; display: none;">Lock bracket</button>
                           </div>
                         </main>
                         
@@ -119,6 +119,29 @@
                           </div>
                           <div class="vacio" style="display:true">No tienes torneos registrados!</div>  
                     </div>
+                    <div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-labelledby="scoreModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="scoreModalLabel">Results</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body" style="display: flex; flex-direction:row; justify-content:center">
+                              <div id="A" style="margin-right: 10px"></div>
+                              <input type="text" id="scoreA" style="width: 60px"> </input>
+                              <div>-</div>
+                              <input type="text" id="scoreB" style="width: 60px"> </input>
+                              <div id="B" style="margin-left: 10px"></div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn btn-danger" id="modalYes">Done</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </div>
             </div>
       </div>
