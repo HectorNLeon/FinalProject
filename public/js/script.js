@@ -291,7 +291,7 @@ $("#Form-addMember").on("click", function(e){
     //GET NEW MEMBER DATA
     memberAndTeam.user = $("#Form-teamMemberName").val();
     $.ajax({
-        url: endpointUser+"/"+memberAndTeam.user,
+        url: endpointUser+"/id/"+memberAndTeam.user,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
