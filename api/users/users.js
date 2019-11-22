@@ -23,7 +23,7 @@ router.get( "/", ( req, res, next ) => {                          //GET ALL USER
 });
 
 
-router.get( "/:Id", ( req, res, next ) => {                           //GET ONE USER
+router.get( "/id/:Id", ( req, res, next ) => {                           //GET ONE USER
     let user = req.params.Id;
     UserList.getUser(user)
         .then( user => {
@@ -39,6 +39,7 @@ router.get( "/:Id", ( req, res, next ) => {                           //GET ONE 
 });
 router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM
     let user = req.query;
+    console.log(user);
     for(var key in user){
         let temp = user[key];
         user[key] = new RegExp(".*" + temp + ".*")
@@ -54,6 +55,8 @@ router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM
                 message : "Something went wrong with the DB. Try again later."
             })
         });
+
+});
 
   
 router.post("/", jsonParser, ( req, res, next ) => {

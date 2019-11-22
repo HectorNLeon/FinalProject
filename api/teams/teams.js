@@ -20,7 +20,7 @@ router.get( "/", ( req, res, next ) => {              //GET ALL TEAMS
 });
 
 
-router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
+router.get( "/id/:Id", ( req, res, next ) => {                   //GET ONE TEAM
     let team = req.params.Id;
     TeamList.getTeam(team)
         .then( team => {
@@ -132,6 +132,26 @@ router.put("/", jsonParser, (req, res, next) =>{
     TeamList.update(updTeam)
         .then(team => {
             console.log(team);
+            return res.status( 200 ).json( team );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
+router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM
+    let team = req.query;
+    console.log(team);
+    for(var key in team){
+        let temp = team[key];
+        team[key] = new RegExp(".*" + temp + ".*")
+    }
+    TeamList.getTeams(team)
+        .then( team => {
             return res.status( 200 ).json( team );
         })
         .catch( error => {

@@ -53,7 +53,7 @@ function load(){
                 $("#users > .vacio").hide();
                 data.forEach(element => {
                     $("#users > .list-group")
-                    .append('<a class="list-group-item list-group-item-action" id="list-profile-list" href ="/profile/'+element._id+'" "data-toggle="list"  role="tab" aria-controls="tournament">'
+                    .append('<a class="list-group-item list-group-item-action" id="list-profile-list" href ="/profile/'+element.user+'" "data-toggle="list"  role="tab" aria-controls="tournament">'
                     + element.name+'</a>');
                 });
             }
@@ -73,7 +73,7 @@ function load(){
                 $("#teams > .vacio").hide();
                 data.forEach(element => {
                     $("#teams > .list-group")
-                    .append('<a class="list-group-item list-group-item-action" id="list-profile-list" href ="/profile/'+element._id+'" "data-toggle="list"  role="tab" aria-controls="tournament">'
+                    .append('<a class="list-group-item list-group-item-action" id="list-profile-list" href ="/teams/'+element._id+'" "data-toggle="list"  role="tab" aria-controls="tournament">'
                     + element.teamName+'</a>');
                 });
             }
@@ -81,7 +81,6 @@ function load(){
                 $("#teams > .vacio").show();
         });
     }
-   
 }
 
 load();
