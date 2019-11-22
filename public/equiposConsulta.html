@@ -8,19 +8,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Borregos Tournaments - Teams</title>
+    <title>Torneos Borregos - Equipos</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/35de4e3e97.js" crossorigin="anonymous"></script>
 
   </head>
 
   <body onload="loadAllTeams()">
-
 
     <div class="d-flex" id="wrapper">
 
@@ -31,13 +29,12 @@
           src="./img/logo.png" class=""> 
         </div>
         <div class="list-group list-group-flush bg-primary">
-          <a href="/home" class="list-group-item list-group-item-action bg-primary text-white">Home</a>
-          <a href="/profile" class="list-group-item list-group-item-action bg-primary text-white" id="goProfile">Profile</a>
-          <a class="list-group-item list-group-item-action bg-dark text-white">Teams</a>
-          <a href="/tournaments" class="list-group-item list-group-item-action bg-primary text-white">Tournaments</a>        
+          <a href="./home.html" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
+          <a href="./perfil.html" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
+          <a class="list-group-item list-group-item-action bg-dark text-white">Equipos</a>
+          <a href="#" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
         </div>      
-        <a href="#" class="list-group-item list-group-item-action bg-light text-danger" id="logout">Log out</a>
-
+        <a href="#" class="list-group-item list-group-item-action bg-light text-danger" id="logout">Salir</a>
       </div>
       <!-- /#sidebar-wrapper -->
 
@@ -53,19 +50,10 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="input-group">
-              <input type="text" class="form-control" id="searchString" placeholder="Busca torneos/usuarios/equipos.." aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
-              </div>
-          </div>
-          <button type="button" class="btn btn-primary btn-circle btn-lg">
-              <i class="fas fa-plus"></i>
-        </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
               <p class="h3 text-primary">
-                Borregos Tournaments
+                Torneos Borregos
               </p>
             </ul>
           </div>
@@ -76,23 +64,23 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header text-center">
-              <h4 class="modal-title w-100 font-weight-bold">Create new team</h4>
+              <h4 class="modal-title w-100 font-weight-bold">Crear equipo</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body mx-3">
               <div class="md-form mb-5">
-                <input type="text" id="Form-teamId" class="form-control validate">
-                <label for="Form-teamId">Team ID</label>
+                <i class="fas fa-envelope prefix grey-text"></i>
                 <input type="text" id="Form-teamName" class="form-control validate">
-                <label for="Form-teamName">Team name</label>              
+                <label for="Form-teamName">Nombre de tu equipo</label>              
+                <i class="fas fa-lock prefix grey-text"></i>
                 <input type="text" id="Form-desc" class="form-control validate">
-                <label for="Form-desc">Give us a little description of your team</label>
+                <label for="Form-desc">Danos una pequeña descripción del equipo</label>
               </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-              <button class="btn btn-default badge-primary" id="Form-createTeam">Create</button>
+              <button class="btn btn-default badge-primary" id="Form-createTeam">Crear</button>
             </div>
           </div>
         </div>
@@ -100,15 +88,30 @@
 
       <div class="text-center">
         <a href="" class="btn btn-default btn-rounded m-4 badge-primary" data-toggle="modal" data-target="#modalLoginForm">
-          Create team (+)
+          Crear equipo (+)
         </a>
       </div>
 
       <div class="container-fluid">
-        <h1 class="mt-4 text-center">Teams in system:</h1>
+        <h1 class="mt-4 text-center">Equipos registrados en el sistema</h1>
         <div class="container mt-5">
           <ul class="list-group" id="allTeams">
-            
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
+            <li class="list-group-item teamItem">
+              <img style="max-width:50px; margin: 10px;" src="./img/team.png" class="text-center rounded-circle">
+              Lorem ipsum dolor sit amet, consectetur.
+            </li>
           </ul>
         </div>          
       </div>
@@ -122,7 +125,7 @@
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
-  <script type="text/javascript" src="/js/script.js"></script>
+  <script type="text/javascript" src="./js/script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script>

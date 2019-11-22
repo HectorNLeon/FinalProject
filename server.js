@@ -36,6 +36,7 @@ app.use('/search', search);
 
 app.get('/home', ( req, res, next ) => {             
     res.sendFile(path.join(__dirname+'/public/home.html'));
+
 });
 
 let server;

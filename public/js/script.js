@@ -32,6 +32,7 @@ function loadProfile(){
     let userProfile = window.location.pathname;
     userProfile = userProfile.substring(9);
     $.ajax({url: endpointUser+"/"+userProfile,
+
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
@@ -71,6 +72,7 @@ function loadTeam(){
     teamPage = teamPage.substring(7);    
     $.ajax({
         url: endpointTeams+"/"+teamPage,
+
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
@@ -109,6 +111,7 @@ function loadTeam(){
             }catch(error){
                 let list = $("#resultDiv");
                 list.html("<p class ='display-2 text-center'>Team not found</p>");
+
             }
         },
         error: function(err){            
@@ -334,6 +337,7 @@ $("#Form-createTeam").on("click", function(e){
         _id : "",
         teamName : "",
         creator : "",
+
         creationDate : "",
         desc : "",
         members : []
@@ -390,6 +394,7 @@ $("#Form-modifyTeam").on("click", function(e){
             }else{
                 alert("Team modified");
                 window.location.href = "/teams/"+newTeam._id;
+
             }
         },
         error : function(err){
@@ -397,6 +402,7 @@ $("#Form-modifyTeam").on("click", function(e){
                 alert("Missing fields to modify");
             }else{
                 alert("Error modifying team");
+
             }            
         }
     });
@@ -417,12 +423,14 @@ $("#btn_login").on("click", function(e){
         dataType : "JSON",
         contentType : "application/json",
         success: function(responseJSON){
+            console.log(responseJSON);
             if(!responseJSON){
                 alert("User not registered");
             }else{
                 alert("Welcome!");
                 Cookies.set('userName', authUser.user);
                 window.location.href = "/home";
+
             }
         },
         error : function(err){
@@ -452,5 +460,7 @@ $('#searchString').keypress(function (e) {
 $("#logout").on("click", function(e){
     e.preventDefault();
     Cookies.remove('userName');
+    Cookies.remove('nameUser');
+    Cookies.remove('idUser');
     window.location.href = "index.html";
 });
