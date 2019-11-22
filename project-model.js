@@ -82,7 +82,7 @@ let UserList = {
             });
     },
     postLogin: function(authUser) {               //LOGIN USER
-        return users.findOne({user: authUser.user, password: authUser.pass}, authUser)
+        return users.findOne({user: authUser.user})
             .then( user => {
                 return user;
             })

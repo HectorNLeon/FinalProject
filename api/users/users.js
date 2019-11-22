@@ -3,6 +3,9 @@ let router = express.Router();
 let {UserList} = require('../../project-model');
 let bp = require('body-parser');
 let jsonParser = bp.json();
+let bcrypt = require('bcrypt');
+let Bcrypt = require('bcryptjs');
+let saltRounds=10;
 
 
 router.get( "/", ( req, res, next ) => {                          //GET ALL USERS
@@ -36,8 +39,12 @@ router.get( "/:Id", ( req, res, next ) => {                           //GET ONE 
 
 router.post("/", jsonParser, ( req, res, next ) => {
     let user = req.body;
-    UserList.post(user)
+    console.log(user);
+    bcrypt.hash(user.password, saltRounds, function (err, hash){ 
+    user.password = hash,
+    UserList.post(user,hash)
         .then( user => {
+            console.log(user,hash);
             return res.status( 200 ).json( user );
         })
         .catch( error => {
@@ -47,6 +54,7 @@ router.post("/", jsonParser, ( req, res, next ) => {
                 message : "Something went wrong with the DB. Try again later."
             })
         });
+    });
 });
 
 router.put("/", jsonParser, ( req, res, next ) => {
@@ -80,10 +88,21 @@ router.post("/login", jsonParser, (req, res, next) => {          //USER LOGIN
         });
     }
     UserList.postLogin(authUser)
-        .then(authUser => {
-            console.log(authUser);
-            //res.redirect('/home');
-            return res.status(201).json(authUser);
+        .then(user => {
+            console.log(user);
+            if(!user){
+                return res.status(400).json({
+                    message: "Username does not exist",
+                    status: 400
+                });
+            }
+            if(!Bcrypt.compareSync(authUser.pass, user.password)) {
+                return res.status(400).json({
+                    message: "Password incorrect",
+                    status: 400
+                });
+            }
+            return res.status(201).json(user);
         })
         .catch(err => {
             res.statusMessage = "Something went wrong with the DB";
