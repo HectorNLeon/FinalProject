@@ -94,7 +94,7 @@ let UserList = {
             });
     },
     postLogin: function(authUser) {               //LOGIN USER
-        return users.findOne({user: authUser.user, password: authUser.pass}, authUser)
+        return users.findOne({user: authUser.user, password: authUser.pass}, {user : 1 , name : 1})
             .then( user => {
                 return user;
             })
@@ -166,7 +166,7 @@ let TeamList = {
             });
     },
     //db.teams.update({"teamName" : "EQUIPO A MODIFICAR"}, {$push: {"members" : "USUARIO A AGREGAR"}})
-    addMember: function(team, member) {             //ADD MEMBER TO TEAM
+    addMember: function(team, member) {             //ADD MEMBER TO TEAM   MEMBER:user and MEMBER:name
         return teams.updateOne({teamName:team}, {$push:{members : member}})
             .then( team => {
                 return team;
