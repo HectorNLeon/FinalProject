@@ -34,6 +34,25 @@ router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
         });
 });
 
+router.get( "/search/", ( req, res, next ) => {                   //GET ONE TEAM
+    let team = req.query;
+    for(var key in team){
+        let temp = team[key];
+        team[key] = new RegExp(".*" + temp + ".*")
+    }
+    TeamList.getTeams(team)
+        .then( team => {
+            return res.status( 200 ).json( team );
+        })
+        .catch( error => {
+            res.statusMessage = "Something went wrong with the DB. Try again later.";
+            return res.status( 500 ).json({
+                status : 500,
+                message : "Something went wrong with the DB. Try again later."
+            })
+        });
+});
+
 router.post("/", jsonParser, (req, res, next) => {            //CREATE TEAM    
     let newTeam = req.body;
 

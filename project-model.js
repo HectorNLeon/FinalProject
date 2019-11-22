@@ -39,10 +39,13 @@ let tournamentSchema = mongoose.Schema({
     game: {type: String},
     desc: {type: String},
     participants: [String],
+    numberOfParticipants: {type: Number},
+    started: {type: Boolean},
     matches: [matchSchema],
     first: {type: String},
     second: {type: String},
-    third: {type: String}
+    third: {type: String},
+    img: { type: String}
 });
 
 
@@ -64,6 +67,16 @@ let UserList = {
     },
     getUser: function(userSearch){                        //GET ONE USER
         return users.findOne({user: userSearch})
+            .then( user => {
+                return user;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+        
+    },
+    getUsers: function(userSearch){                        //GET ONE USER
+        return users.find(userSearch)
             .then( user => {
                 return user;
             })
@@ -132,6 +145,17 @@ let TeamList = {
             });
         
     },
+    getTeams: function(teamSearch){    
+        console.log(teamSearch);                    //GET ONE TEAM
+        return teams.find(teamSearch)
+            .then( team => {
+                return team;
+            })
+            .catch( error => {
+                throw Error( error );
+            });
+        
+    },
     post: function(newTeam) {               //CREATE TEAM, newTeam must have the creator added
         return teams.create(newTeam)
             .then( team => {
@@ -189,9 +213,9 @@ let TournamentList = {
             .catch( error => {
                 throw Error( error );
             });
-		
-	},
-    getTournament: function(tournamentSearch){                        //GET ONE TEAM
+        
+    },
+    getTournamentByID: function(tournamentSearch){                        //GET ONE TEAM
         return tournaments.findOne({_id: tournamentSearch})
             .then( tournaments => {
                 return tournaments;
@@ -201,17 +225,30 @@ let TournamentList = {
             });
         
     },
-    post: function(newTournament) {               //CREATE TEAM, newTeam must have the creator added
-        return tournaments.create(newTournament)
-            .then( tournament => {
-                return tournament;
+    getTournaments: function(tournamentSearch){             
+        console.log(tournamentSearch);       //GET ONE TEAM
+        return tournaments.find(tournamentSearch)
+            .then( tournaments => {
+                return tournaments;
             })
             .catch( error => {
                 throw Error( error );
             });
     },
-    update: function(updTournament) {             //UPDATE TEAM
-        return tournament.updateOne({id:updTournament.id}, updTournament)
+    post: function(newTournament) {               //CREATE TOURNAMENT
+        return tournaments.create(newTournament)
+            .then( tournament => {
+                return tournament;
+            })
+            .catch( error => {
+                console.log(error);
+                throw Error( error );
+            });
+    },
+    update: function(id, updTournament) {           //UPDATE TOURNAMENT
+        console.log(updTournament);
+        console.log(id);
+        return tournaments.updateOne({_id: id}, updTournament)
             .then( tournament => {
                 return tournament;
             })
@@ -220,7 +257,7 @@ let TournamentList = {
             });
     },
     addParticipant: function(updTo) {             //UPDATE TEAM
-        return tournament.updateOne({_id :updTo.id}, {$push: {participants: updTo.part}})
+        return tournaments.updateOne({_id :updTo.id}, {$push: {participants: updTo.part}})
             .then( tournament => {
                 return tournament;
             })
@@ -229,7 +266,7 @@ let TournamentList = {
             });
     },
     addMatch: function(updTo) {             //UPDATE TEAM
-        return tournament.updateOne({id :updTo.id}, {$push: {matches: updTo.match}})
+        return tournaments.updateOne({id :updTo.id}, {$push: {matches: updTo.match}})
             .then( tournament => {
                 return tournament;
             })
@@ -238,7 +275,7 @@ let TournamentList = {
             });
     },
     updateMatch: function(updTo){
-        return tournament.updateOne({id :updTo.id}, {$set: {"matches.$[element]": updTo.match}},
+        return tournaments.updateOne({id :updTo.id}, {$set: {"matches.$[element]": updTo.match}},
                                     {arrayFilters: [ { element: updTo.Index } ], upsert: true })
             .then( tournament => {
                 return tournament;
@@ -248,7 +285,7 @@ let TournamentList = {
             });
     },
     delete: function(tournamentId) {              //DELETE TEAM
-        return tournament.findOneAndRemove({id:tournamentId})
+        return tournaments.findOneAndRemove({_id:tournamentId})
             .then( tournament => {
                 return tournament;
             })
