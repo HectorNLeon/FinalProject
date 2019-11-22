@@ -75,10 +75,11 @@ let UserList = {
             });
         
     },
-    getUsers: function(userSearch){                        //GET ONE USER
+    getUsers: function(userSearch){          
+        console.log(userSearch);                      //GET ONE USER
         return users.find(userSearch)
-            .then( user => {
-                return user;
+            .then( users => {
+                return users;
             })
             .catch( error => {
                 throw Error( error );

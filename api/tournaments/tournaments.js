@@ -38,7 +38,7 @@ router.get( "/id/:tournament", ( req, res, next ) => {                   //GET O
             })
         });
 });
-router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM
+router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM    
     let tournament = req.query;
     for(var key in tournament){
         let temp = tournament[key];

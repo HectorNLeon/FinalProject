@@ -31,7 +31,7 @@ function loadProfile(){
     checkSession();
     let userProfile = window.location.pathname;
     userProfile = userProfile.substring(9);
-    $.ajax({url: endpointUser+"/"+userProfile,
+    $.ajax({url: endpointUser+"/id/"+userProfile,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
@@ -70,7 +70,7 @@ function loadTeam(){
     let teamPage = window.location.pathname;
     teamPage = teamPage.substring(7);    
     $.ajax({
-        url: endpointTeams+"/"+teamPage,
+        url: endpointTeams+"/id/"+teamPage,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){
@@ -289,7 +289,7 @@ $("#Form-addMember").on("click", function(e){
     //GET NEW MEMBER DATA
     memberAndTeam.user = $("#Form-teamMemberName").val();
     $.ajax({
-        url: endpointUser+"/"+memberAndTeam.user,
+        url: endpointUser+"/id/"+memberAndTeam.user,
         method: "GET",
         dataType: "json",
         success: function(responseJSON){

@@ -2,7 +2,11 @@ let express = require('express');
 let router = express.Router();
 let {UserList} = require('../../project-model');
 let bp = require('body-parser');
+const { parse } = require('querystring');
 let jsonParser = bp.json();
+var multiparty = require('multiparty');
+const path = require('path');
+const fs = require('fs')
 let bcrypt = require('bcrypt');
 let Bcrypt = require('bcryptjs');
 let saltRounds=10;
@@ -22,7 +26,7 @@ router.get( "/", ( req, res, next ) => {                          //GET ALL USER
         });
 });
 
-router.get( "/:Id", ( req, res, next ) => {                           //GET ONE USER
+router.get( "/id/:Id", ( req, res, next ) => {                           //GET ONE USER
     let user = req.params.Id;
     UserList.getUser(user)
         .then( user => {
@@ -37,7 +41,7 @@ router.get( "/:Id", ( req, res, next ) => {                           //GET ONE 
         });
 });
 
-router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM
+router.get( "/search", ( req, res, next ) => {                   //GET ONE TEAM    
     let user = req.query;
     for(var key in user){
         let temp = user[key];

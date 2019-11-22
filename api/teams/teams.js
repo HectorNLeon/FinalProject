@@ -19,7 +19,7 @@ router.get( "/", ( req, res, next ) => {              //GET ALL TEAMS
         });
 });
 
-router.get( "/:Id", ( req, res, next ) => {                   //GET ONE TEAM
+router.get( "/id/:Id", ( req, res, next ) => {                   //GET ONE TEAM
     let team = req.params.Id;
     TeamList.getTeam(team)
         .then( team => {
