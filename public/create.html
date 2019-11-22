@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Borregos Tournaments - Create</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/simple-sidebar.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/35de4e3e97.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-primary border-right" id="sidebar-wrapper">
+      <div class="center">
+        <img style="max-width:100px; margin: 10px;"
+        src="/img/logo.png" class=""> 
+      </div>
+      <div class="list-group list-group-flush bg-primary">
+        <a href="/home" class="list-group-item list-group-item-action bg-primary text-white">Inicio</a>
+        <a href="/profile" class="list-group-item list-group-item-action bg-primary text-white">Perfil</a>
+        <a href="/teams" class="list-group-item list-group-item-action bg-primary text-white">Equipos</a>
+        <a href="/tournaments" class="list-group-item list-group-item-action bg-primary text-white">Torneos</a>        
+      </div>      
+      <a href="#" class="list-group-item list-group-item-action bg-primary text-danger" id="logout">Salir</a>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary " id="menu-toggle">
+          <span class="navbar-toggler-icon" style="background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=ffffff')"></span>          
+        </button>
+
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchString" placeholder="Busca torneos/usuarios/equipos.." aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
+            </div>
+        </div>
+        <button type="button" onclick="window.location.href = '/create'" class="btn btn-primary btn-md" style="margin-left: 100px; margin-right: 120px;">
+            Create
+            <i class="fas fa-plus"></i>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <p class="h3 text-primary">
+                Borregos Tournaments
+            </p>
+          </ul>
+        </div>
+      </nav>
+      <form class="form-horizontal" style="margin-top: 10px;" enctype="multipart/form-data" method="POST" action="/api/tournaments">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="name">Name of tournament</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter the tournament name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="date">Date</label>
+          <div class="col-sm-10">
+            <input type="date" name="date" class="form-control" id="date" placeholder="Enter the date" required>
+          </div>
+        </div>
+        <div class="form-group">
+                <label class="control-label col-sm-2" for="place">Place</label>
+                <div class="col-sm-10">
+                  <input type="text" name="place" class="form-control" id="place" placeholder="Enter the place" required>
+                </div>
+              </div>
+
+        <div class="form-group ">
+                <label class="control-label col-sm-2" for="game">Game</label>
+                <div class="col-sm-10">
+                    <select class="custom-select" name="game" id="game" required>
+                        <option value="">Select the game</option>
+                        <option value="Soccer">Soccer</option>
+                        <option value="Tennis">Tennis</option>
+                        <option value="Football">Football</option>
+                    </select>
+                </div>
+        </div>
+
+              
+        <div class="form-group">
+                <label class="control-label col-sm-10" for="desc">Description</label>
+                <div class="col-sm-10">
+                        <textarea class="form-control"rows=7 name="desc" id= "desc" placeholder="Enter the description" required></textarea>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-10" for="desc">Image</label>
+            <div class="col-sm-10" >
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="img" accept= "image/*" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10" style="margin-top: 50px; margin-left:78%;">
+            <button type="submit" value="submit" id="done" class="btn btn-primary ">Submit</button>
+          </div>
+        </div>
+      </form>
+
+      
+  </div>
+  <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Optional JavaScript -->  
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script type="text/javascript" src="/js/create.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Borregos Tournaments - Profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/35de4e3e97.js" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body onload="loadProfile()">
+
+    <div class="d-flex" id="wrapper">
+
+      <!-- Sidebar -->
+      <div class="bg-primary border-right" id="sidebar-wrapper">
+        <div class="center">
+          <img style="max-width:100px; margin: 10px;"
+          src="/img/logo.png" class=""> 
+        </div>
+        <div class="list-group list-group-flush bg-primary">
+
+          <a href="/home" class="list-group-item list-group-item-action bg-primary text-white">Home</a>
+          <a href="/profile" class="list-group-item list-group-item-action bg-dark text-white" id="goProfile">Profile</a>
+          <a href="/teams" class="list-group-item list-group-item-action bg-primary text-white">Teams</a>
+          <a href="/tournaments" class="list-group-item list-group-item-action bg-primary text-white">Tournaments</a>        
+        </div>      
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-danger" id="logout">Log out</a>
+
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+          <button class="btn btn-primary " id="menu-toggle">
+            <span class="navbar-toggler-icon" style="background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=ffffff')"></span>          
+          </button>
+
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="input-group">
+              <input type="text" class="form-control" id="searchString" placeholder="Busca torneos/usuarios/equipos.." aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"  id="search">Search</button>
+              </div>
+          </div>
+          <button type="button" onclick="window.location.href = '/create'" class="btn btn-primary btn-md" style="margin-left: 100px; margin-right: 100px;">
+            Create
+            <i class="fas fa-plus"></i>
+      </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <p class="h3 text-primary">
+                Borregos Tournaments
+              </p>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="container-fluid">
+          <h1 class="mt-4 text-center" id="nameProfile"></h1>
+          <div class="text-center mb-4">
+            <img style="max-width:300px; margin: 10px;" src="/img/yo.jpg" class="text-center rounded-circle" id="imgProfile">
+          </div>
+          <div class="container mt-5" id="result">
+            <div class="row mb-4">
+              <div class="col-12">
+                <label for="userProfile">Username</label>
+                <p class="h3" id="userProfile">
+                    
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-4 col-sm-12">
+              <label for="mailProfile">Mail</label>
+               <p class="h3 text-center" id="mailProfile">
+                
+              </p>
+            </div>
+            <div class="col-12 col-md-4 col-sm-12">
+              <label for="ageProfile">Age</label>
+              <p class="h3 text-center" id="ageProfile">
+                
+              </p>
+            </div>
+            <div class="col-12 col-md-4 col-sm-12">
+              <label for="phoneProfile">Phone</label>
+              <p class="h3 text-center" id="phoneProfile">
+                
+              </p>
+            </div>
+          </div>          
+        </div>            
+        <p id="bioProfile" class="display-4 text-justify text-center m-5">
+          
+        </p>
+        <div class="modal fade" id="modalModifyProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">Modify profile</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body mx-3">
+              <div class="md-form mb-5">                
+                <input type="text" id="Form-newName" class="form-control validate">
+                <label for="Form-newName">Name</label>
+                <input type="text" id="Form-newMail" class="form-control validate">
+                <label for="Form-newMail">Mail</label>
+                <input type="text" id="Form-newAge" class="form-control validate">
+                <label for="Form-newAge">Age</label>
+                <input type="text" id="Form-newPhone" class="form-control validate">
+                <label for="Form-newPhone">Phone</label>
+                <input type="text" id="Form-newBio" class="form-control validate">
+                <label for="Form-newBio">Bio</label>
+              </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+              <button class="btn btn-default badge-success" id="Form-modifyProfile">Modify</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" id="modifyProfile">
+        <a href="" class="btn btn-default btn-rounded m-4 badge-success" data-toggle="modal" data-target="#modalModifyProfile">
+          Modify Profile (/)
+        </a>
+      </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Optional JavaScript -->  
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+  <script type="text/javascript" src="/js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+</body>
+
+</html>
